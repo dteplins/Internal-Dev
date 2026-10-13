@@ -164,10 +164,44 @@ Largest overdue: Green Pastures $6,321.00 (of which $4,257.00 is 91+ days), Vant
 Solutions $2,773.81 (1 to 30), Master Window Systems $1,381.54 (1 to 30), Specialized Printing
 $1,309.00 (91+), Paragon Distribution $1,196.12 (91+). Several customers carry credit balances.
 
+**Profit and loss, Oct 1 2025 to Sep 30 2026** (QuickBooks summary figures)
+| Line | Amount |
+|---|---:|
+| Total income | $671,146.29 |
+| Services income | $670,580.49 |
+| Gross profit | $473,009.56 |
+| Gross margin (as reported) | 70.5% |
+| Total expenses | $387,710.36 |
+| Net income | $85,299.20 |
+| Net margin (as reported) | 12.7% |
+
+Largest cost lines:
+| Line | Amount |
+|---|---:|
+| Contractors | $168,701.18 |
+| Job Supplies (COGS) | $161,634.06 |
+| Office Supplies & Software | $84,136.03 |
+| Advertising & Marketing | $36,080.10 |
+| QuickBooks Payments Fees (COGS) | $30,111.18 |
+| Payroll Expense | $27,126.04 |
+| Charitable Contributions | $13,995.00 |
+| Insurance | $12,157.00 |
+| Continuing Education | $10,495.00 |
+
+Monthly income ranged from $38,570.74 (Oct 2025) to $73,717.83 (Jun 2026). December 2025 shows
+COGS of $117,151.23 and net income of -$105,160.04; the only loss month. TODO: confirm whether that
+was a one-off hardware pass-through or a booking error.
+
+Monthly net income: Oct $5,201 · Nov $21,935 · Dec -$105,160 · Jan $30,282 · Feb $25,222 ·
+Mar $4,761 · Apr $11,079 · May $2,180 · Jun $37,550 · Jul $13,669 · Aug $8,328 · Sep $30,253.
+
+**Cash flow, same period:** operating +$93,386.45, financing -$27,087.28 (owner's pay and
+partner accounts), net cash increase $66,299.17. Cash went from $8,365.59 to $74,664.76.
+
+QuickBooks industry was set to 541512 Computer Systems Design Services on Oct 13 2026 (with
+Dima's approval) so the P&L would run.
+
 **Still missing**
-- **Profit and loss / margins / expenses:** blocked. QuickBooks requires an industry on the
-  company profile before it returns the P&L (the file shows code 541990).
-- **Cash flow:** same block likely applies.
 - **Revenue split, managed IT vs. automation:** not separable from current QuickBooks items.
 - **Client churn, outbound metrics, technician utilization:** not in QuickBooks. TODO.
 
@@ -182,7 +216,7 @@ These come from Dima's briefing.
 1. When does Mark's automation outreach go live, and what booking rate counts as success?
 2. Is 3 to 5 Architecture Sessions a week enough when Dima runs every one?
 3. How is engineering capacity covered after Adam's passing?
-4. Margin by line is still missing (P&L blocked; automation revenue not split out in QuickBooks).
+4. Margin by line is still missing: automation revenue is not split out in QuickBooks.
 5. Does BurgerFi corporate approve the Olo change, and can it become a repeatable franchisee product?
 
 ## Connected data sources

@@ -12,7 +12,7 @@ problem. A director's job is to make that answer better, not to win the argument
 
 1. **Stay in your lane, then step out of it.** Lead with your own discipline
    (finance, marketing, operations…), then say how the proposal affects the others.
-2. **Evidence over opinion.** Cite numbers from `board/company-profile.md`, the
+2. **Evidence over opinion.** Cite numbers from the company or client profile, the
    meeting brief, connected data sources, or web research. Mark anything you
    estimate as `(estimate)` and give the assumption behind it.
 3. **Disagree specifically.** Name the director, quote the claim, say why it is

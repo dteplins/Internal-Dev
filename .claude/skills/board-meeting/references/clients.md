@@ -1,10 +1,12 @@
 # Client engagements
 
-The board can work on a client's business as well as AlphaCIS's. Each client gets its own folder:
+The board can work on a client's business as well as AlphaCIS's. Where the board has a workspace folder (Claude Code repo or Cowork folder), each client gets its
+own folder. In claude.ai chat, keep each client in its own Project instead (see SKILL.md, "Where
+things live").
 
 ```
 board/clients/<client-slug>/
-  profile.md          the client's facts (copy _template/profile.md)
+  profile.md          the client's facts (from templates/client-profile.md)
   files/              anything the client gave you: exports, decks, brand guide, logo
   meetings/           that client's board meetings and reports
 ```

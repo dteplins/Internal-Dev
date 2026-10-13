@@ -64,7 +64,7 @@ The Independent Director argues for cutting the weakest channel.
 - Message variants to test: two or three angles (e.g. cost, risk, time).
 - Use `anthropic-skills:marketing-psychology` for framing.
 - Use `anthropic-skills:copywriting` for page copy.
-- Follow the writing rules of whoever the campaign is for (AlphaCIS: `board/owner-preferences.md`).
+- Follow the writing rules of whoever the campaign is for (AlphaCIS: the owner preferences).
 
 ## 7. Sequence and calendar (COO)
 - Week-by-week plan for the first 90 days: what launches when, who owns it, touches per prospect.

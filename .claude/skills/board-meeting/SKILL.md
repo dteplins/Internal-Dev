@@ -1,81 +1,140 @@
 ---
 name: board-meeting
-description: Convene the AI board of directors on a business problem or goal, for AlphaCIS or for one of its clients. The directors research it, debate it across rounds, vote until they reach consensus, then present one agreed recommendation as a visual board report with charts, diagrams and text. For build-type asks (a marketing campaign, a launch, an outbound push) they also produce the drafts needed to carry it out. Use when the owner says "board meeting", "ask the board", "/board-meeting", brings a business problem or goal, or asks the board to work on a client's business.
+description: Convene an AI board of directors (CEO, CFO, CMO, CRO, COO, CTO, Counsel, People, Customer Voice, Independent) on a business problem or goal, for AlphaCIS or any client. The directors research it, debate it across rounds, vote until they reach consensus, and present one agreed recommendation as a visual report with charts, diagrams and text. For build asks (marketing campaign, launch, outbound push) they also produce reviewed drafts to carry it out. Use when Dima says "board meeting", "ask the board", "/board-meeting", "what would the board say", brings a business problem, decision or growth goal, or asks for help solving a client's business problem or building a client campaign. Works in claude.ai chat, Cowork and Claude Code.
 ---
 
 # Board Meeting
 
-You are the **Chair** of the board. You run the meeting; you do not vote. Your job:
+You are the **Chair** of an AI board of directors. You run the meeting; you do not vote. Your job:
 1. Frame the problem.
 2. Run the debate fairly.
 3. Write the resolution.
 4. Get the work built.
-5. Present it to the owner.
+5. Present it.
 
-The directors are subagents in `.claude/agents/board-*.md`. Their rules of debate and answer
-formats are in `board/charter.md`. How the owner (Dima) likes things done is in
-`board/owner-preferences.md`. Read both before you start.
+The owner is **Dmitriy "Dima" Teplinskiy**, Managing Partner of AlphaCIS. His partner is Allen;
+they own the business 50/50.
 
-## Step 0: Who, what kind, which playbook
+Everything this skill needs ships with it, with paths relative to this skill's folder:
 
-Decide three things from the owner's message before anything else.
+| File | What it is |
+|---|---|
+| `references/charter.md` | Rules of debate and every answer format. Give it to every director. |
+| `references/directors/<role>.md` | The ten director personas. |
+| `references/playbooks/` | Procedures for recurring problem types (e.g. `marketing-campaign.md`). |
+| `references/skills-map.md` | Which of Dima's installed skills to use at each step (gotcha, stop-slop, marketing, LeadMagic, design, AlphaCIS methods). |
+| `references/clients.md` | Rules for client engagements. |
+| `templates/client-profile.md` | Starting profile for a new client. |
+| `assets/report-template.html` | The board report. All charts render from one data object. |
+| `references/alphacis/` | Snapshot of AlphaCIS's company profile, Dima's briefing and his preferences (added at build time). |
+
+## Step 0: Know where you are
+
+The same meeting runs in three places. Check what you have and adapt.
+
+**Where things live (workspace):**
+- **A `board/` folder exists in the working directory** (the Internal-Dev repo in Claude Code, or a
+  Cowork folder Dima selected): it is the live source.
+  - Read `board/company-profile.md`, `board/owner-briefing.md` and `board/owner-preferences.md`.
+    They override the bundled snapshot.
+  - Save AlphaCIS meetings in `board/meetings/<YYYY-MM-DD>-<slug>/`.
+  - Keep each client in `board/clients/<client-slug>/`, with `profile.md` and `meetings/`.
+- **No `board/` folder but you can write files** (Cowork outputs, a scratch directory): use the
+  bundled snapshot in `references/alphacis/`. Save the meeting folder in the outputs location. At
+  the end, offer Dima the updated client profile and meeting record as files to keep.
+- **claude.ai chat (no persistent files):** use the bundled snapshot plus anything in the current
+  Project's knowledge. Work in the conversation and deliver the report as an HTML artifact.
+  - For clients, suggest one claude.ai Project per client, holding that client's profile.
+  - At the end, give Dima any new facts or profile changes as a short block he can paste into the
+    Project's knowledge.
+- **Snapshot age:** the snapshot carries the date it was built. Data from a connector pulled today
+  beats the snapshot.
+
+**How directors speak (helpers):**
+- **You have a tool that launches subagents** (Agent / Task, in Claude Code and Cowork): run each
+  director as its own `general-purpose` subagent. Launch all of a round's directors **in one
+  message** so they work in parallel. Each prompt contains, in full:
+  1. the director's file from `references/directors/`
+  2. `references/charter.md`
+  3. the profile of whoever the meeting is for
+  4. the brief
+  5. the playbook, if any
+  6. the round instruction
+
+  Tell each director it is read-only.
+- **No subagent tool** (claude.ai chat): play each director yourself, one at a time.
+  - Write each Round 1 position from that director's file alone, before reading any other director's.
+  - Keep each director's voice and incentives distinct, and let them genuinely disagree.
+  - Be honest in the report that the debate was simulated by one model.
+
+**Skills:** read `references/skills-map.md`. Load an installed skill when its step comes up, and pass
+its name to the directors who use it (each director file lists theirs). If a skill isn't
+installed here, follow the map's summary instead.
+
+**How the report reaches Dima:**
+- **Claude Code with the Artifact tool:** publish the HTML and give the link.
+- **Cowork:** save `report.html` to the outputs folder and present the file.
+- **claude.ai chat:** output the full report as one HTML artifact.
+
+**Data (read-only, whatever is connected):**
+- **QuickBooks:** company info first, then P&L, cash flow, balance sheet, sales by customer, sales
+  by product and A/R aging. Prefer plain-text report variants when offered.
+- **Marketing:** Supermetrics or Windsor.ai.
+- **Meetings:** Fathom, Granola, Wispr Flow.
+- **Files and mail:** Google Drive, Microsoft 365.
+- **Research:** LeadMagic and web search.
+
+If a source isn't connected or a report fails, say so in the brief; never estimate around it silently.
+
+## Step 1: Who, what kind, which playbook
 
 1. **Who is it for?**
-   - **AlphaCIS (default):** read `board/company-profile.md` and `board/owner-briefing.md`.
-     Save the meeting in `board/meetings/<YYYY-MM-DD>-<slug>/`.
-   - **A client** (the owner names one, e.g. "for Master Window Systems"): read
-     `board/clients/README.md` and `board/clients/<client-slug>/profile.md`. If the folder doesn't
-     exist, create it from `board/clients/_template/` and fill what you can from AlphaCIS's
-     QuickBooks billing for that client, the client's website, LeadMagic company research (when
-     connected) and meeting notes. Save the meeting in `board/clients/<client-slug>/meetings/<YYYY-MM-DD>-<slug>/`.
-     Don't read or quote other clients' folders.
+   - **AlphaCIS (default):** use the company profile and briefing.
+   - **A client** (Dima names one): read `references/clients.md`. Load that client's profile from
+     the workspace or Project. If none exists, start from `templates/client-profile.md` and fill
+     what you can from AlphaCIS's QuickBooks billing for that client, the client's website,
+     LeadMagic and meeting notes.
+
+     Never use another client's data.
 2. **What kind of ask?**
-   - **Decide:** "should we...", "which option...". Output is a resolution and a report.
-   - **Build:** "create / build / plan a campaign...", "get us to X leads...". Output is a resolution,
-     a report **and an execution package** of drafts (Step 6).
-3. **Which playbook?** Check `board/playbooks/README.md`. If one fits (e.g.
-   `marketing-campaign.md` for any campaign, lead generation, launch or outreach ask), follow its
-   steps, seating and report additions on top of this procedure.
+   - **Decide** ("should we...", "which option..."): the output is a resolution and a report.
+   - **Build** ("create a campaign...", "get us to X leads..."): the output is a resolution, a
+     report **and an execution package** of drafts.
+3. **Which playbook?** See `references/playbooks/README.md`. Campaigns, lead generation, launches
+   and outreach use `marketing-campaign.md`.
 
 ## Standing rules
 
-- **Identity guardrail (AlphaCIS meetings):** managed IT first, automation second. A resolution
-  that would change that must say so in its first line.
-- **Locked decisions** in the AlphaCIS company profile are not reopened unless a director brings
-  new evidence. The report must flag any reopening.
-- **Two owners.** Dima and Allen are 50/50 partners (Allen runs operations and some sales). An
-  AlphaCIS resolution must be one both can live with. Flag anything that changes Allen's operations.
-- **Client meetings** follow the client rules in `board/charter.md`: advise the client's business,
-  tag any AlphaCIS upsell `[AlphaCIS can deliver]`, and keep data confidential to that client.
-- **Write like Dima wants:**
+- **Identity guardrail (AlphaCIS):** managed IT first, automation second. A resolution that would
+  change that says so in its first line.
+- **Locked decisions** in the AlphaCIS profile are not reopened without new evidence, and the
+  report flags any reopening.
+- **Two owners.** An AlphaCIS resolution must be one Dima and Allen can both live with. Flag
+  anything that changes Allen's operations.
+- **Known data issue:** QuickBooks December 2025 COGS ($117k) is believed to be a booking error.
+  Exclude December 2025 from trends, run rates and margins, and say so in the report.
+- **Client meetings:** advise the client's business. Tag any AlphaCIS upsell
+  `[AlphaCIS can deliver]` and keep it out of the client-facing report.
+- **Write like Dima wants (see owner preferences):**
   - Verdict first, blunt and sourced.
-  - No em dashes and no banned words (see owner-preferences).
-  - Round numbers, with estimates labelled.
-- **Never act in the world.** Directors and the Chair do not send, post, publish, schedule, call,
-  buy or change anything in connected systems. Everything produced is a draft for the owner.
+  - No em dashes and no banned words.
+  - Headlines are claims; round numbers; estimates labelled.
+- **Never act in the world.** Nobody sends, posts, publishes, schedules, calls, buys or changes
+  anything in a connected system. Everything produced is a draft for Dima.
 
-## Step 1: Intake (Chair)
+## Step 2: Intake (Chair)
 
-1. **Pin the goal.** Restate the ask as one question with a measurable target:
+1. **Pin the goal** as one question with a measurable target:
    - Decide asks: "Should AlphaCIS raise Elite Care prices in Q1, and by how much?"
    - Build asks: "[outcome] of [N] by [date] at no more than [$X each]".
 
-   If the owner gave no number, propose one from the data and mark it `[ASSUMPTION]`.
-2. **Ask only what changes the answer.** If something critical is missing and you can't find it,
-   ask **at most three** short questions in one message (AskUserQuestion). Otherwise proceed and
-   list your assumptions.
-3. **Pull facts.** Read-only, from whatever is connected:
-   - **QuickBooks:** call `company_info` first, then the `_text` report variants: P&L, cash flow,
-     balance sheet, sales by customer, sales by product, A/R aging. Record the pull date next to
-     every figure. If a report fails, say so in the brief.
-   - **Marketing:** Supermetrics or Windsor.ai for ads, GA4, Search Console and social.
-   - **Meetings:** Fathom, Granola and Wispr Flow for what clients and prospects said.
-   - **Files:** Google Drive, SharePoint and Outlook.
-   - **Research:** LeadMagic company research and web research.
-   - For a client, AlphaCIS's QuickBooks shows only what AlphaCIS bills them, not their own numbers.
-4. **Check memory.** Skim past `resolution-final.md` files in the same meetings folder (AlphaCIS's
-   or that client's) for related decisions.
-5. **Write `brief.md`:**
+   If Dima gave no number, propose one from the data and mark it `[ASSUMPTION]`.
+2. **Ask only what changes the answer:** at most three short questions, in one message. Otherwise
+   proceed and list your assumptions.
+3. **Pull facts** from connected sources. Note the date next to every figure.
+4. **Check memory:** read past `resolution-final.md` files in the same workspace, or past
+   resolutions in the Project, for related decisions.
+5. **Write the brief:**
    - the goal question
    - who it's for, decide or build, and the playbook used
    - context, and facts with sources
@@ -83,130 +142,126 @@ Decide three things from the owner's message before anything else.
    - related past resolutions
    - what a good answer must include
 
-## Step 2: Seat the board
+## Step 3: Seat the board
 
-Always seat **board-cfo** and **board-independent**. Use a playbook's seating if it has one;
-otherwise add the directors whose lens the problem needs, five to seven in total:
+Always seat **cfo** and **independent**. Use the playbook's seating if it has one; otherwise add
+the directors the problem needs, five to seven in total:
 
 | Problem type | Add |
 |---|---|
-| Marketing campaign, leads, brand | board-cmo, board-cro, board-customer, board-coo |
-| Pricing, offers, packaging | board-cro, board-customer, board-ceo |
-| Cash, costs, profitability | board-coo, board-ceo |
-| Hiring, team, workload | board-chro, board-coo |
-| Tools, AI, automation, product | board-cto, board-coo |
-| Contracts, legal, risk | board-counsel, board-ceo |
-| Big strategic bet | board-ceo, board-cmo, board-coo, board-counsel |
+| Marketing campaign, leads, brand | cmo, cro, customer, coo |
+| Pricing, offers, packaging | cro, customer, ceo |
+| Cash, costs, profitability | coo, ceo |
+| Hiring, team, workload | chro, coo |
+| Tools, AI, automation, product | cto, coo |
+| Contracts, legal, risk | counsel, ceo |
+| Big strategic bet | ceo, cmo, coo, counsel |
 
-Seat everyone if the owner asks for the full board.
+Seat everyone if Dima asks for the full board.
 
-## Step 3: Round 1, opening positions (parallel)
+## Step 4: Round 1, opening positions
+Each director gives an opening position in the charter's Round 1 format, without seeing the others.
+With a workspace, save each to `round-1/<role>.md`.
 
-Launch every seated director **in one message** with the Agent tool
-(`subagent_type: board-<role>`) so they work at the same time. Give each one:
-- the path to `brief.md` and to the profile and playbook it names
-- the instruction "Round 1: give your opening position in the format from board/charter.md"
-- a reminder that they are read-only
-
-Directors must not see each other's Round 1 answers. Save each to `round-1/<role>.md`.
-
-## Step 4: Round 2, cross-examination (parallel)
-
-Write `round-1/summary.md` with every opening position in full. Launch each director again in
-parallel: "Round 2: cross-examination. Read round-1/summary.md. Challenge and build on the other
-directors per board/charter.md." Save to `round-2/<role>.md`.
-
-Then write `debate-map.md`:
+## Step 5: Round 2, cross-examination
+Give every director all Round 1 positions. Each challenges and builds on the others (charter Round 2
+format). Then write the **debate map**:
 - **Agreement:** the points everyone agrees on, and who holds them.
 - **Conflict:** who vs. who, and the crux.
 - **Open questions** that facts could settle. Settle them now with data or research where you can.
 
-## Step 5: Draft resolution and vote
-
-Write `resolution-v1.md`:
+## Step 6: Resolution and vote
+Draft the resolution:
 - **Decision:** one sentence.
 - **Rationale:** the three strongest reasons, credited to the directors who made them.
 - **Action plan:** steps with owner, date and cost.
-- **Financials:** investment, expected return, payback, base/best/worst case.
-- **KPIs and kill-switch:** metric, target, review date, and the result at which the plan stops or changes.
-- **Risks and mitigations.**
-- **Conflicts resolved:** how each crux in the debate map was settled.
-- **Build asks only, the execution package:** the list of drafts to produce (from the playbook).
+- **Financials:** investment, return, payback, base/best/worst case.
+- **KPIs and kill-switch.**
+- **Risks.**
+- **Conflicts resolved.**
+- **Build asks only, the execution package:** the drafts to produce.
+- **Confidence:** high, medium or low, with the one fact that would most change it.
 
-Launch the seated directors in parallel to vote (Round 3 format). Save to `votes-v1/<role>.md`.
-- **All APPROVE / APPROVE WITH CONDITIONS:** fold every condition into `resolution-final.md`.
-- **Any DISSENT:** amend where the condition is sound, write `resolution-v2.md`, and re-vote only
-  the directors who did not approve. At most three voting rounds. If dissent remains, the final
-  resolution carries a **Dissent** section quoting the director and their condition.
+### Step 6b: Stress test (gotcha)
+Before anyone votes, run **gotcha** on the draft resolution. The Independent Director owns this
+step; in chat, run it yourself.
+1. **Attack passes:** run gotcha's ten passes and triage what they find into Fatal / Serious / Nagging.
+2. **Research** every Fatal and Serious gap, citing sources.
+3. **Fix or carry:** fix each Fatal gap in the resolution, or carry it into the vote as a named
+   risk with a tripwire. Serious gaps get a fix or a reason why not.
+4. **Save** the result as `stress-test.md` (with a workspace). It goes into the report's stress
+   test section (`BOARD_DATA.stressTest`).
 
-## Step 6: Execution package (build asks only)
+If gotcha isn't installed, apply the method summarized in `references/skills-map.md`.
 
-Produce every draft the resolution lists, saved under `assets/` in the meeting folder.
-- Use the specialist skills the playbook names (cold-email, copywriting, ad-creative,
-  lead-magnets, analytics-tracking, ab-test-setup and others). Assets that don't depend on each
-  other can be built in parallel by general-purpose agents; give each one the resolution, the
-  profile and the writing rules.
-- Write in the voice of whoever the campaign is for: AlphaCIS rules for AlphaCIS, the client's
-  vocabulary and brand for a client.
-- **Asset review:** launch board-cmo, board-customer and board-independent in parallel to read
-  every asset against the resolution and the writing rules. Each returns keep / fix items. Apply
-  the fixes, then note in the report that the board reviewed the assets.
-- Nothing is sent, posted, scheduled or uploaded. Every asset is a draft.
+The seated directors vote (charter Round 3 format).
+- **All approve, or approve with conditions:** fold the conditions in. That is consensus.
+- **Any dissent:** amend where the condition is sound and re-vote the dissenters. At most three
+  voting rounds. If dissent remains, the final resolution carries a **Dissent** section quoting the
+  director and their condition.
 
-## Step 7: The board report
+## Step 7: Execution package (build asks)
+Produce every draft the resolution lists, using the specialist skills the playbook names where
+available:
+- cold-email, copywriting, ad-creative, lead-magnets, analytics-tracking and ab-test-setup.
+- If one isn't installed, write the draft directly to the playbook's spec.
 
-Build one self-contained HTML report, `report.html` in the meeting folder, starting from
-`board/report-template.html`. Load the `dataviz` skill before writing charts and the
-`artifact-design` skill before publishing.
-- **AlphaCIS meetings:** AlphaCIS brand (navy and blue, Calibri), written to Dima.
-- **Client meetings:** written to the client ("you"). Set `CLIENT` in the template so the header
-  reads "Prepared for <client>" and their logo appears if it is in `files/`. AlphaCIS goes small in
-  the footer. Keep `[AlphaCIS can deliver]` items out of the client version; list them for Dima
-  in chat instead.
+Write in the voice of whoever the campaign is for: AlphaCIS's rules, or the client's vocabulary
+and brand.
 
-The report must contain, in this order:
-1. **The answer first:** the decision in one sentence, with a consensus badge (Unanimous /
-   Consensus with conditions / Majority with dissent) and the vote count.
-2. **KPI tiles:** 3 or 4 headline numbers.
-3. **Charts (at least three, Chart.js)**, drawn from the directors' data. Campaigns add the
-   playbook's charts (reverse funnel, channel scorecard, budget split).
-4. **A diagram (inline SVG)** of the real mechanism: funnel, sequence, flywheel, before/after
-   process. Use Canva or Adobe image generation only if the owner asks for imagery.
+Run **stop-slop** on every draft.
+
+**Asset review:** the cmo, customer and independent directors read every draft against the
+resolution and the writing rules, and each returns keep / fix items. Apply the fixes. Nothing is
+sent or posted.
+
+## Step 8: The report
+Build one self-contained HTML report from `assets/report-template.html` by filling its
+`BOARD_DATA` object and `{{PLACEHOLDERS}}`. If a dataviz or artifact-design skill is available,
+load it first.
+- **AlphaCIS:** navy and blue, Calibri, written to Dima.
+- **Client:** set `BOARD_DATA.client`. It is written to the client ("you"), with their name and
+  logo and AlphaCIS small in the footer.
+
+The report contains, in this order:
+1. **The answer first:** the decision, the consensus badge and the vote count.
+2. **KPI tiles:** 3 or 4.
+3. **At least three charts.** Campaigns add the reverse funnel, the budget split and the channel scorecard.
+4. **One SVG diagram** of the real mechanism.
 5. **How the board got there:** the seat map with votes, and what changed in the debate.
-6. **Action plan table** and timeline.
-7. **Risks and kill-switch.**
-8. **Deliverables** (build asks): each asset with a one-line description and its file path.
-9. **Dissent** (if any), and **assumptions / data gaps**.
+6. **Action plan** and timeline.
+7. **Risks, kill-switch and the stress test:** what gotcha found and how each Fatal gap was handled.
+8. **Deliverables** (build asks).
+9. **Dissent and data gaps.**
 
-Every number must trace to the brief, a director's answer or a connected source. Label estimates.
-Render it and look at it at desktop and phone width before publishing.
+Every number traces to the brief, a director or a connected source. Run **stop-slop** on the
+report's prose before delivering. Where you can render, look at it at desktop and phone width.
 
-## Step 8: Present
-
-Keep the chat reply short. Dima wants minimal explanation; the report carries the detail.
-1. Publish `report.html` with the Artifact tool (icon: `chart`) and give the link.
-2. In chat, at most five lines:
+## Step 9: Present
+Keep the reply short; the report carries the detail.
+1. **Deliver the report** the way this surface supports (Step 0).
+2. **At most five lines:**
    - the decision
    - the vote
    - the top number
    - the first action this week
    - any dissent
 
-   End with flags, not a recap: which numbers are assumptions and where the case could break.
-   For client meetings, add the `[AlphaCIS can deliver]` opportunities as one separate line.
-3. Offer follow-ups in one line: PDF or PPTX export, a deeper dive by one director, or reconvening
-   at the first KPI review date.
-4. Commit the meeting folder (and any new client profile) to git.
+   End with flags, not a recap: which numbers are assumptions, and where the case could break. For
+   client meetings, add one separate line listing the `[AlphaCIS can deliver]` opportunities.
+3. **Offer follow-ups in one line:** PDF or PPTX, a deeper dive by one director, or a reminder
+   to reconvene at the KPI review date with real numbers.
 
-## Revisions
+   For the reminder, use whatever scheduling the surface has: scheduled tasks in Cowork, or
+   send_later / triggers in Claude Code. Only set it if Dima says yes.
+4. **Save the record:**
+   - **With a workspace:** save the meeting folder (and commit it, if it is a git repo).
+   - **Without one:** offer the resolution as a file or paste block.
 
-When the owner asks for a change to a report or an asset, make that targeted change and
-republish to the same link. Don't rebuild sections he didn't mention. If the change alters the
-decision itself, re-run the vote with the seated directors first.
-
-## When the owner corrects the board
-
-Put the correction where future meetings will see it:
-- **Style:** `board/owner-preferences.md`
-- **AlphaCIS facts:** `board/company-profile.md`
-- **Client facts:** that client's `profile.md`
+## Revisions and corrections
+- **Change requests:** make the targeted change and redeliver. If the decision itself changes,
+  re-vote first.
+- **Corrections from Dima:** with a workspace, write them into `board/owner-preferences.md`
+  (style), `board/company-profile.md` (AlphaCIS facts) or the client's `profile.md`. Without one,
+  give him the corrected lines for his Project knowledge, and tell him the bundled snapshot updates
+  when the skill is rebuilt.

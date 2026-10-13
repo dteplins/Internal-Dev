@@ -60,7 +60,7 @@ When the owner corrects the board, add the correction here.
   spacing; respect reduced motion; craft in the details.
 - **Visual QA is mandatory:** render the report and look at it (desktop and phone width) before
   presenting.
-- Template: `board/report-template.html`.
+- Template: `assets/report-template.html` in the board-meeting skill.
 
 ## Formats he uses
 - **Board report:** self-contained HTML, published as a link. Offer PDF or PPTX in one line.

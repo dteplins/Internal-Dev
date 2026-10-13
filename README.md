@@ -5,9 +5,36 @@ recommendation as a visual report: charts, diagrams, action plan, risks and the 
 on AlphaCIS's business or any client's. For build asks like a marketing campaign, they also
 produce reviewed drafts of the campaign itself.
 
+## Install it everywhere
+
+`dist/board-meeting.skill` is the installable skill. It works in claude.ai chat, Cowork and Claude Code.
+1. Open the file in the Claude app and click **Save skill**, or upload it in claude.ai under
+   **Settings > Capabilities > Skills**.
+2. It syncs to your account, like your other AlphaCIS skills.
+3. Whenever the skill or `board/` changes, rebuild it with `scripts/build-skill.sh` and re-upload.
+
+The skill adapts to where it runs:
+
+| Surface | Directors | AlphaCIS data | Report |
+|---|---|---|---|
+| Claude Code (this repo) | Parallel helper agents | Live, from `board/` | Published link |
+| Cowork | Parallel helper agents | A selected `board/` folder, or the bundled snapshot | HTML file in outputs |
+| claude.ai chat | Debate simulated by one model (labelled as such) | Bundled snapshot plus Project knowledge | HTML artifact |
+
+In chat, keep one Project per client so each client's profile stays separate.
+
+It also uses your other skills where they fit (`.claude/skills/board-meeting/references/skills-map.md`):
+- **gotcha** stress-tests every draft resolution before the vote.
+- **stop-slop** cleans every report and draft.
+- **price-hunter** gets the CFO real equipment prices.
+- **The AlphaCIS pitch-deck and contracts skills** become next steps.
+- **The marketing skills** write campaign drafts.
+- **LeadMagic** researches accounts, buyers and competitor ads, within credit-guard limits.
+- **ui-ux-pro-max** handles any page or tool the plan needs.
+
 ## Use it
 
-Open a Claude Code session on this repo and type:
+Type:
 
 ```
 /board-meeting should we hire a second engineer or contract out after Adam's passing?
@@ -21,11 +48,11 @@ For a client, name them:
 /board-meeting for Master Window Systems: build a campaign to get 20 new dealer leads a month by March
 ```
 
-The client gets their own folder in `board/clients/`, and their data never mixes with
-other clients'. The report is written to the client, with their name and logo.
+The client gets their own folder in `board/clients/` (or their own Project in chat), and their
+data never mixes with other clients'. The report is written to the client, with their name and logo.
 
 For a build ask, the board doesn't stop at strategy. Following
-`board/playbooks/marketing-campaign.md`, it does three things:
+the marketing campaign playbook, it does three things:
 1. **Pins a number and a date**, then works the funnel backwards from the goal.
 2. **Picks and scores channels**, then builds the budget and a 90-day calendar.
 3. **Writes the drafts:** email sequence, LinkedIn messages, call script, landing page copy, ad
@@ -62,8 +89,8 @@ three votes, you see it in the report. It is never hidden.
 
 ## Make it smarter
 
-- **Add a playbook** in `board/playbooks/` for any other problem type you hit often (pricing,
-  hiring, client IT roadmaps).
+- **Add a playbook** in `.claude/skills/board-meeting/references/playbooks/` for any other problem
+  type you hit often (pricing, hiring, client IT roadmaps), then rebuild the skill.
 - **Correct the board** when it gets something wrong. It writes the fix into the profile or
   preferences so the next meeting uses it.
 

@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Board Resolution</title>
 <!--
-  AlphaCIS board report template. Brand: navy and blue, Calibri (see board/owner-preferences.md).
-  The Chair copies this file into board/meetings/<folder>/report.html and replaces
+  AlphaCIS board report template. Brand: navy and blue, Calibri (see the owner preferences).
+  The Chair copies this file into the meeting folder as report.html (or fills it in an artifact) and replaces
   every {{PLACEHOLDER}} and every value in the BOARD_DATA object at the bottom.
   All charts and the seat map render from BOARD_DATA, so most edits happen there.
   Copy rules: no em dashes, headlines are claims, round numbers in the body,
@@ -210,6 +210,11 @@ footer{margin-top:72px;padding-top:20px;border-top:1px solid var(--line);font-si
     </div>
   </div>
   <div class="card table-scroll" style="margin-top:14px"><table id="riskTable"></table></div>
+  <div class="card" id="stressCard" style="margin-top:14px;display:none">
+    <h3 style="margin-bottom:4px">Stress test</h3>
+    <p style="font-size:13px;margin-bottom:12px">Before the vote, the Independent Director tried to break the plan. Here is what was found and what changed.</p>
+    <div class="table-scroll"><table id="stressTable"></table></div>
+  </div>
 </section>
 
 <!-- 7. How the board got there -->
@@ -294,6 +299,11 @@ const BOARD_DATA = {
   ],
   dissent: null, // or { who: "COO", text: "...", condition: "..." }
   gaps: [ "<b>{{MISSING_FACT}}:</b> assumed {{ASSUMPTION}}. Changes {{WHAT_IT_AFFECTS}}." ],
+  // Gotcha stress test of the draft resolution. level: "Fatal" | "Serious" | "Nagging".
+  stressTest: [
+    { level: "Fatal",   gap: "{{GAP}}", fix: "{{WHAT_CHANGED_IN_THE_RESOLUTION}}", source: "{{SOURCE_OR_REASONING}}" },
+    { level: "Serious", gap: "{{GAP}}", fix: "{{FIX_OR_WHY_NOT}}", source: "{{SOURCE_OR_REASONING}}" }
+  ],
   // Build asks from the marketing-campaign playbook. Set to null for decide asks.
   campaign: {
     headline: "{{CAMPAIGN_HEADLINE_CLAIM}}",
@@ -422,6 +432,14 @@ function drawCampaign(){
     C.channels.map(c => `<tr><td><b>${c.name}</b></td><td>${c.reach}</td><td>${c.cost}</td><td>${c.speed}</td><td>${c.effort}</td><td>${c.fit}</td><td><b>${total(c)}</b></td><td class="money">$${c.spend.toLocaleString()}</td><td>${c.outcomes}</td><td><span class="vote ${c.chosen ? "approve" : "dissent"}">${c.chosen ? "In" : "Cut"}</span></td></tr>`).join("") + `</tbody>`;
 }
 
+function drawStress(){
+  const T = D.stressTest; if (!T || !T.length) return;
+  $("stressCard").style.display = "block";
+  const cls = { Fatal: "dissent", Serious: "cond", Nagging: "approve" };
+  $("stressTable").innerHTML = `<thead><tr><th>Level</th><th>Gap</th><th>What we did</th><th>Basis</th></tr></thead><tbody>` +
+    T.map(t => `<tr><td><span class="vote ${cls[t.level] || ""}">${t.level}</span></td><td>${t.gap}</td><td>${t.fix}</td><td>${t.source}</td></tr>`).join("") + `</tbody>`;
+}
+
 function drawFrame(){
   if (D.client) {
     $("kicker").textContent = `Prepared for ${D.client.name} · {{MEETING_DATE}}`;
@@ -435,7 +453,7 @@ function drawFrame(){
 }
 
 function render(){ drawHeat(); drawMechanism(); drawCharts(); drawCampaign(); }
-drawFrame();
+drawFrame(); drawStress();
 let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(drawMechanism, 150); });
 render();
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);

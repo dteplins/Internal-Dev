@@ -1,0 +1,310 @@
+<title>AlphaCIS Board of Directors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: a boardroom seen from above, with a dossier panel beside it; then the meeting sequence, the seating matrix and where it runs. */
+:root{
+  --bg:#F3F5F9; --surface:#FFFFFF; --ink:#14213D; --ink-2:#3B4A68; --muted:#66728A;
+  --line:#D9DFEA; --navy:#14213D; --blue:#1F4E9C; --sky:#9DB7E8; --wash:#E7EEF9;
+  --table:#E9EEF6; --table-edge:#C9D4E6; --seat:#FFFFFF; --seat-ink:#14213D;
+  --good:#17803D; --warn:#B26A00;
+  --font:Calibri,Carlito,"Segoe UI",system-ui,sans-serif;
+  --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0B1220; --surface:#111A2E; --ink:#EEF3FB; --ink-2:#C4D1EA; --muted:#93A4C3;
+  --line:#24324F; --navy:#C9D9F5; --blue:#8FB0EA; --sky:#5F85CC; --wash:#16233D;
+  --table:#14213D; --table-edge:#2A3B5E; --seat:#0B1220; --seat-ink:#EEF3FB;
+  --good:#4ADE80; --warn:#F5B44A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B1220; --surface:#111A2E; --ink:#EEF3FB; --ink-2:#C4D1EA; --muted:#93A4C3;
+  --line:#24324F; --navy:#C9D9F5; --blue:#8FB0EA; --sky:#5F85CC; --wash:#16233D;
+  --table:#14213D; --table-edge:#2A3B5E; --seat:#0B1220; --seat-ink:#EEF3FB;
+  --good:#4ADE80; --warn:#F5B44A; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.5;margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:16px;padding-block:40px 72px}
+h1,h2,h3{margin:0;text-wrap:balance;color:var(--ink)}
+h1{font-size:clamp(34px,5.6vw,58px);line-height:1.02;letter-spacing:-.01em}
+h2{font-size:clamp(24px,3vw,32px);line-height:1.1}
+h3{font-size:19px}
+p{margin:0}
+.kicker{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);font-weight:700}
+.lead{font-size:clamp(17px,2vw,20px);color:var(--ink-2);max-width:62ch}
+.sub{color:var(--muted);max-width:68ch}
+header{display:grid;gap:14px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--muted);font-size:15px}
+.meta b{color:var(--ink)}
+section{margin-top:64px;display:grid;gap:14px}
+
+/* Boardroom */
+.room{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:20px;align-items:start;margin-top:8px}
+.table-wrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+svg{display:block;width:100%;height:auto}
+.seat{cursor:pointer;outline:none}
+.seat circle.ring{fill:var(--seat);stroke:var(--blue);stroke-width:2}
+.seat.always circle.ring{fill:var(--navy);stroke:var(--navy)}
+.seat.always text.abbr{fill:var(--seat)}
+.seat.outside circle.ring{stroke-dasharray:5 4}
+.seat text.abbr{fill:var(--seat-ink);font-weight:700;font-size:20px;text-anchor:middle;dominant-baseline:central;font-family:var(--font)}
+.seat text.name{fill:var(--muted);font-size:14px;text-anchor:middle;font-family:var(--font)}
+.seat:hover circle.ring,.seat:focus-visible circle.ring{stroke-width:4}
+.seat.selected circle.halo{opacity:1}
+circle.halo{fill:none;stroke:var(--sky);stroke-width:6;opacity:0;transition:opacity .15s}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--muted);padding:8px 6px 2px}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.dot{width:13px;height:13px;border-radius:50%;border:2px solid var(--blue);background:var(--seat);display:inline-block}
+.dot.always{background:var(--navy);border-color:var(--navy)}
+.dot.outside{border-style:dashed}
+
+.dossier{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:grid;gap:14px;min-width:0}
+.dossier .role{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);font-weight:700}
+.dossier h3{font-size:26px;line-height:1.1}
+.badge{display:inline-block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--wash);color:var(--blue)}
+.badge.always{background:var(--navy);color:var(--seat)}
+.owns{color:var(--ink-2)}
+.dossier ul{margin:0;padding-left:20px;display:grid;gap:6px;color:var(--ink-2)}
+.label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--mono);font-size:12.5px;padding:3px 8px;border-radius:6px;border:1px solid var(--line);color:var(--ink-2);background:var(--bg)}
+.watch{border-top:1px solid var(--line);padding-top:12px;color:var(--ink-2)}
+.watch b{color:var(--warn)}
+
+/* Meeting flow */
+.flow{list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;counter-reset:step}
+.flow li{counter-increment:step;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:6px;align-content:start;min-width:0}
+.flow li::before{content:counter(step);font-weight:700;color:var(--blue);font-size:15px;font-variant-numeric:tabular-nums}
+.flow li h3{font-size:18px}
+.flow li p{color:var(--muted);font-size:15px}
+.flow li .tag{justify-self:start;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--wash);color:var(--blue)}
+.flow li.key{border-color:var(--blue);box-shadow:inset 0 0 0 1px var(--blue)}
+.flow li.build{border-style:dashed}
+
+/* Seating matrix */
+.matrix-wrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:15px}
+th,td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:center}
+th{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+td:first-child,th:first-child{text-align:left;color:var(--ink);font-weight:700;position:sticky;left:0;background:var(--surface)}
+tr:last-child td{border-bottom:0}
+.m{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--blue)}
+.m.always{background:var(--navy)}
+.m.opt{background:none;border:2px solid var(--blue)}
+.note{font-size:14px;color:var(--muted)}
+
+/* Surfaces */
+.where{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.where div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:8px;align-content:start}
+.where dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:15px}
+.where dt{color:var(--muted)}
+.where dd{margin:0;color:var(--ink-2)}
+
+.call{background:var(--navy);color:var(--seat);border-radius:14px;padding:22px;display:grid;gap:12px}
+.call .kicker{color:var(--sky)}
+.call code{font-family:var(--mono);font-size:15px;background:color-mix(in srgb,var(--seat) 10%,transparent);padding:12px 14px;border-radius:8px;display:block;overflow-x:auto;white-space:nowrap}
+.call button{justify-self:start;font:700 15px var(--font);color:var(--navy);background:var(--seat);border:0;border-radius:8px;padding:9px 16px;cursor:pointer}
+.call button:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+.call p{color:color-mix(in srgb,var(--seat) 78%,transparent)}
+
+@media (max-width:860px){.room{grid-template-columns:1fr}.where{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">AlphaCIS · Board of Directors</div>
+    <h1>Ten seats. One agreed answer.</h1>
+    <p class="lead">An AI board that researches your problem, argues it out, stress-tests the plan and votes before anything reaches you. It works on AlphaCIS's business and on any client's.</p>
+    <div class="meta"><span><b>Owners:</b> Dima and Allen, 50/50</span><span><b>Chair:</b> Claude (runs the meeting, never votes)</span><span><b>Seated per meeting:</b> 5 to 7</span></div>
+  </header>
+
+  <section aria-labelledby="room-h">
+    <div class="kicker">The boardroom</div>
+    <h2 id="room-h">Select a seat to see how that director thinks</h2>
+    <div class="room">
+      <div class="table-wrap">
+        <svg viewBox="0 0 760 460" role="group" aria-label="Boardroom table with the Chair at the head and ten director seats" id="room"></svg>
+        <div class="legend">
+          <span><i class="dot always"></i>Always seated</span>
+          <span><i class="dot"></i>Seated when the problem needs them</span>
+          <span><i class="dot outside"></i>Outside voice (no department)</span>
+        </div>
+      </div>
+      <aside class="dossier" id="dossier" aria-live="polite"></aside>
+    </div>
+  </section>
+
+  <section aria-labelledby="flow-h">
+    <div class="kicker">How a meeting runs</div>
+    <h2 id="flow-h">From your question to a report you can act on</h2>
+    <p class="sub">Directors answer alone first so the debate starts from independent views. Nothing is sent, posted or changed in your systems; everything the board produces is a draft for you.</p>
+    <ol class="flow">
+      <li><h3>Intake</h3><p>The Chair pins a measurable goal, pulls QuickBooks and other connected data, and writes the brief. At most three questions for you.</p></li>
+      <li><h3>Seat the board</h3><p>CFO and Independent always sit. The problem type adds 3 to 5 more.</p></li>
+      <li><span class="tag">In parallel</span><h3>Opening positions</h3><p>Each director answers alone with a diagnosis, recommendation, evidence and a chart.</p></li>
+      <li><span class="tag">In parallel</span><h3>Cross-examination</h3><p>Directors challenge each other by name. The Chair maps agreements, conflicts and open questions.</p></li>
+      <li><h3>Draft resolution</h3><p>Decision, plan with owners and dates, financials, KPIs, kill-switch, confidence.</p></li>
+      <li class="key"><span class="tag">gotcha</span><h3>Stress test</h3><p>The Independent Director runs gotcha: ten attack passes, research on every serious gap. Fatal gaps get fixed before the vote.</p></li>
+      <li class="key"><span class="tag">Up to 3 rounds</span><h3>Vote</h3><p>Approve, approve with conditions, or dissent. Dissent that survives three rounds is shown to you, never hidden.</p></li>
+      <li class="build"><span class="tag">Build asks</span><h3>Execution package</h3><p>Campaign drafts from your marketing skills, reviewed by CMO, Customer Voice and Independent, then cleaned by stop-slop.</p></li>
+      <li><h3>Report</h3><p>Verdict first, at least three charts, a diagram, the vote, risks, stress test and next steps. Five lines in chat.</p></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="matrix-h">
+    <div class="kicker">Who sits when</div>
+    <h2 id="matrix-h">The problem decides the room</h2>
+    <div class="matrix-wrap"><table id="matrix"></table></div>
+    <p class="note">Filled navy: always seated. Filled blue: seated for that problem type. Ring: seated when the campaign touches regulated claims, cold email law or calling rules. Ask for "the full board" to seat all ten.</p>
+  </section>
+
+  <section aria-labelledby="where-h">
+    <div class="kicker">Where it runs</div>
+    <h2 id="where-h">One skill, three places</h2>
+    <div class="where">
+      <div><h3>Claude Code</h3><dl><dt>Directors</dt><dd>Ten parallel agents</dd><dt>Data</dt><dd>Live, from the repo's board folder</dd><dt>Report</dt><dd>Published link, record committed to git</dd></dl></div>
+      <div><h3>Cowork</h3><dl><dt>Directors</dt><dd>Ten parallel agents</dd><dt>Data</dt><dd>A selected board folder, or the bundled snapshot</dd><dt>Report</dt><dd>HTML file in outputs</dd></dl></div>
+      <div><h3>claude.ai chat</h3><dl><dt>Directors</dt><dd>One model plays each seat in turn, labelled as simulated</dd><dt>Data</dt><dd>Bundled snapshot plus Project knowledge</dd><dt>Report</dt><dd>HTML artifact</dd></dl></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="call-h">
+    <div class="call">
+      <div class="kicker">Call the board</div>
+      <h2 id="call-h" style="color:var(--seat)">Bring it a goal with a number in it</h2>
+      <code id="example">/board-meeting for Master Window Systems: build a campaign to get 20 new dealer leads a month by March</code>
+      <button type="button" id="copy">Copy example</button>
+      <p>Or just say "ask the board" with the problem in plain words.</p>
+    </div>
+  </section>
+</div>
+
+<script>
+const D = [
+  { id:"cfo", short:"Finance", abbr:"CFO", title:"Chief Financial Officer", always:true,
+    owns:"The money: cash runway, profitability, unit economics, pricing math and the return on every proposal.",
+    asks:["What does this cost, when, and what does it return?","What happens to cash in the base, best and worst case?","Are the unit economics sound?","Which numbers are real and which are guesses?"],
+    skills:["QuickBooks","price-hunter","pitch-deck ROI method","xlsx"],
+    watch:"Revenue projections with no basis; ignoring cash timing; growth that loses money on every sale." },
+  { id:"cro", short:"Revenue", abbr:"CRO", title:"Chief Revenue Officer",
+    owns:"Revenue: pipeline, win rates, deal size, sales cycle, pricing and packaging, retention and upsell.",
+    asks:["Where in the funnel are we losing deals, and why?","Is pricing capturing the value we deliver?","How much revenue sits with existing customers?","What is the realistic pipeline number?"],
+    skills:["cold-email","leadmagic research","decision-makers","hiring-intent","alphacis-contracts"],
+    watch:"Discounting to close; ignoring churn; forecasts built on hope." },
+  { id:"cmo", short:"Marketing", abbr:"CMO", title:"Chief Marketing Officer",
+    owns:"Demand: who the market is, what the message is, which channels bring buyers in, and what each costs.",
+    asks:["Who exactly is the buyer and what pain moves them?","Which channels have proven return?","What does our positioning say that competitors can't?","How will we measure it?"],
+    skills:["marketing-psychology","copywriting","ad-creative","paid-ads","lead-magnets","seo-audit","ai-seo","ads-research","ckmbrand"],
+    watch:"Vanity metrics; too many channels; messaging about features instead of outcomes." },
+  { id:"ceo", short:"Strategy", abbr:"CEO", title:"Chief Executive (Strategy)",
+    owns:"The big picture: where the company plays, how it wins, and which bets to make or stop making.",
+    asks:["Is this the real problem, or a symptom?","Does it fit the 12-month goal and 3-year vision?","What do we stop doing to make room?","Where is the durable advantage?"],
+    skills:["competitor-profiling","deep-research","gotcha"],
+    watch:"Chasing every opportunity at once; strategy the team or budget can't carry out." },
+  { id:"coo", short:"Operations", abbr:"COO", title:"Chief Operating Officer",
+    owns:"Execution: can we deliver this, with whom, by when, and what breaks along the way.",
+    asks:["What capacity does this need, and do we have it?","What is the rollout, with owners and dates?","Which processes change, and what can be automated?","What tells us execution is on track?"],
+    skills:["price-hunter","analytics-tracking","90-day calendar"],
+    watch:"Plans with no owner; underestimating delivery load; launching more than the team can absorb." },
+  { id:"independent", short:"Independent", abbr:"IND", title:"Independent Director", always:true,
+    owns:"No department to protect. Makes sure the board isn't fooling itself, and owns the gotcha stress test.",
+    asks:["What is the case for doing the opposite, or nothing?","Which assumption, if wrong, collapses the plan?","What would a sharp outside investor say?","Are we agreeing because it's right, or comfortable?"],
+    skills:["gotcha","stop-slop"],
+    watch:"Groupthink; plans with no kill-switch; confusing activity with progress." },
+  { id:"customer", short:"Customer", abbr:"VOC", title:"Voice of the Customer", outside:true,
+    owns:"Speaks in character as the buyer you are trying to win, and reacts line by line to offers and messages.",
+    asks:["Would I even notice this?","What does this cost me: money, time, looking bad to my boss?","What makes me reply, and what makes me delete it?","Which words sound like a vendor talking?"],
+    skills:["marketing-psychology","ads-research","competitor-profiling","onboarding-cro"],
+    watch:"Jargon, feature lists, claims with no proof, and asks that are too big too early." },
+  { id:"cto", short:"Technology", abbr:"CTO", title:"Chief Technology Officer",
+    owns:"Technology: product, tooling, data, AI and automation, security, and build vs. buy.",
+    asks:["Can AI or automation do this cheaper than people?","Build, buy or partner, and the total cost of ownership?","What data do we need, and is it clean?","What are the security and lock-in risks?"],
+    skills:["ui-ux-pro-max","apple-design","web-artifacts-builder","analytics-tracking"],
+    watch:"Shiny-tool syndrome; custom builds where off-the-shelf works; ignoring maintenance." },
+  { id:"counsel", short:"Legal and risk", abbr:"GC", title:"General Counsel and Risk",
+    owns:"Risk: contracts, compliance, data privacy, insurance and reputational downside.",
+    asks:["What could go wrong, how likely, how bad?","Which contracts and rules apply?","What protections reduce the risk?","Is any part of this irreversible?"],
+    skills:["gotcha legal pass","alphacis-contracts"],
+    watch:"Blocking without offering a safe route; ignoring risk because the upside is exciting." },
+  { id:"chro", short:"People", abbr:"CPO", title:"Chief People Officer",
+    owns:"People: hiring, roles, incentives, workload, culture and the owners' own capacity.",
+    asks:["Right people in the right seats?","Hire, contract, outsource or automate?","How does this change workload and morale?","Is an owner the bottleneck, and what should be delegated?"],
+    skills:["deep-research"],
+    watch:"Hiring before the role is clear; burning out a small team; incentives that reward the wrong thing." }
+];
+
+const svg = document.getElementById("room"), NS = "http://www.w3.org/2000/svg";
+const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); (p || svg).appendChild(e); return e; };
+// Table
+el("ellipse", { cx:400, cy:230, rx:250, ry:118, fill:"var(--table)", stroke:"var(--table-edge)", "stroke-width":2 });
+el("ellipse", { cx:400, cy:230, rx:214, ry:88, fill:"none", stroke:"var(--table-edge)", "stroke-width":1, "stroke-dasharray":"2 6" });
+const t1 = el("text", { x:400, y:224, "text-anchor":"middle", "font-size":15, "font-weight":700, fill:"var(--muted)", "letter-spacing":"2" }); t1.textContent = "ALPHACIS";
+const t2 = el("text", { x:400, y:246, "text-anchor":"middle", "font-size":15, fill:"var(--muted)" }); t2.textContent = "one question, one resolution";
+// Chair at the head (left)
+const chair = el("g", {});
+el("rect", { x:58, y:196, width:84, height:68, rx:12, fill:"var(--blue)" }, chair);
+const ct = el("text", { x:100, y:226, "text-anchor":"middle", "font-size":18, "font-weight":700, fill:"var(--seat)" }, chair); ct.textContent = "Chair";
+const cs = el("text", { x:100, y:246, "text-anchor":"middle", "font-size":13, fill:"var(--seat)" }, chair); cs.textContent = "no vote";
+// Owners at the foot (right)
+const own = el("g", {});
+el("rect", { x:666, y:186, width:82, height:88, rx:12, fill:"none", stroke:"var(--blue)", "stroke-width":2 }, own);
+const o1 = el("text", { x:707, y:214, "text-anchor":"middle", "font-size":12.5, "font-weight":700, fill:"var(--muted)", "letter-spacing":"1.5" }, own); o1.textContent = "REPORT TO";
+const o2 = el("text", { x:707, y:238, "text-anchor":"middle", "font-size":17, "font-weight":700, fill:"var(--ink)" }, own); o2.textContent = "Dima";
+const o3 = el("text", { x:707, y:258, "text-anchor":"middle", "font-size":17, "font-weight":700, fill:"var(--ink)" }, own); o3.textContent = "Allen";
+// Seats: 5 along the top edge, 5 along the bottom
+const xs = [210, 305, 400, 495, 590];
+const pos = [...xs.map(x => ({ x, y:72, lab:-1 })), ...xs.map(x => ({ x, y:388, lab:1 }))];
+const seats = {};
+D.forEach((d, i) => {
+  const p = pos[i];
+  const g = el("g", { class:"seat" + (d.always ? " always" : "") + (d.outside ? " outside" : ""), tabindex:0, role:"button", "aria-label":`${d.title}${d.always ? ", always seated" : ""}` });
+  el("circle", { class:"halo", cx:p.x, cy:p.y, r:38 }, g);
+  el("circle", { class:"ring", cx:p.x, cy:p.y, r:31 }, g);
+  const a = el("text", { class:"abbr", x:p.x, y:p.y }, g); a.textContent = d.abbr;
+  const n = el("text", { class:"name", x:p.x, y:p.y + (p.lab < 0 ? -44 : 56) }, g); n.textContent = d.short;
+  g.addEventListener("click", () => select(d.id));
+  g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(d.id); } });
+  seats[d.id] = g;
+});
+
+function select(id){
+  const d = D.find(x => x.id === id);
+  Object.values(seats).forEach(g => g.classList.remove("selected")); seats[id].classList.add("selected");
+  document.getElementById("dossier").innerHTML = `
+    <div class="role">${d.abbr}</div>
+    <h3>${d.title}</h3>
+    <div><span class="badge ${d.always ? "always" : ""}">${d.always ? "Always seated" : d.outside ? "Outside voice" : "Seated by problem type"}</span></div>
+    <p class="owns">${d.owns}</p>
+    <div><div class="label">Always asks</div><ul>${d.asks.map(q => `<li>${q}</li>`).join("")}</ul></div>
+    <div><div class="label">Skills it reaches for</div><div class="chips">${d.skills.map(s => `<span class="chip">${s}</span>`).join("")}</div></div>
+    <p class="watch"><b>Watches for:</b> ${d.watch}</p>`;
+}
+select("cfo");
+
+// Seating matrix: 2 = always, 1 = seated, 0.5 = conditional
+const cols = ["cfo","independent","ceo","cmo","cro","coo","cto","counsel","chro","customer"];
+const rows = [
+  ["Marketing campaign, leads, brand", { cmo:1, cro:1, customer:1, coo:1, counsel:.5 }],
+  ["Pricing, offers, packaging", { cro:1, customer:1, ceo:1 }],
+  ["Cash, costs, profitability", { coo:1, ceo:1 }],
+  ["Hiring, team, workload", { chro:1, coo:1 }],
+  ["Tools, AI, automation, product", { cto:1, coo:1 }],
+  ["Contracts, legal, risk", { counsel:1, ceo:1 }],
+  ["Big strategic bet", { ceo:1, cmo:1, coo:1, counsel:1 }]
+];
+const abbr = id => D.find(d => d.id === id).abbr;
+document.getElementById("matrix").innerHTML =
+  `<thead><tr><th scope="col">Problem type</th>${cols.map(c => `<th scope="col">${abbr(c)}</th>`).join("")}</tr></thead><tbody>` +
+  rows.map(([name, m]) => `<tr><td>${name}</td>${cols.map(c => {
+    const v = (c === "cfo" || c === "independent") ? 2 : (m[c] || 0);
+    const label = v === 2 ? "always seated" : v === 1 ? "seated" : v ? "seated if regulated" : "not seated";
+    return `<td>${v ? `<span class="m ${v === 2 ? "always" : v < 1 ? "opt" : ""}" role="img" aria-label="${abbr(c)} ${label}"></span>` : `<span class="note" aria-label="not seated"></span>`}</td>`;
+  }).join("")}</tr>`).join("") + `</tbody>`;
+
+document.getElementById("copy").addEventListener("click", async e => {
+  const txt = document.getElementById("example").textContent;
+  try { await navigator.clipboard.writeText(txt); e.target.textContent = "Copied"; }
+  catch { const r = document.createRange(); r.selectNodeContents(document.getElementById("example")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); e.target.textContent = "Selected, press Ctrl+C"; }
+  setTimeout(() => e.target.textContent = "Copy example", 2000);
+});
+</script>

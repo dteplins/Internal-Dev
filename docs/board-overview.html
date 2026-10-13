@@ -1,52 +1,54 @@
 <title>AlphaCIS Board of Directors</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Carlito:wght@400;700&family=JetBrains+Mono:wght@500;600&display=swap">
 <style>
 /* Layout: a boardroom seen from above, with a dossier panel beside it; then the meeting sequence, the seating matrix and where it runs. */
 :root{
-  --bg:#F3F5F9; --surface:#FFFFFF; --ink:#14213D; --ink-2:#3B4A68; --muted:#66728A;
-  --line:#D9DFEA; --navy:#14213D; --blue:#1F4E9C; --sky:#9DB7E8; --wash:#E7EEF9;
-  --table:#E9EEF6; --table-edge:#C9D4E6; --seat:#FFFFFF; --seat-ink:#14213D;
-  --good:#17803D; --warn:#B26A00;
-  --font:Calibri,Carlito,"Segoe UI",system-ui,sans-serif;
-  --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+  --bg:#F4F7FA; --surface:#FFFFFF; --ink:#0C1C30; --ink-2:#3B4E66; --muted:#5C6E85;
+  --line:#D7E0EA; --navy:#014274; --blue:#1F6FB8; --sky:#7FB2E8; --wash:#E6EFF7;
+  --table:#EEF3F8; --table-edge:#B9C6D6; --seat:#FFFFFF; --seat-ink:#0C1C30;
+  --good:#2C6E56; --warn:#8A6114; --crit:#A8452A; --deep:#0B2A44;
+  --font:Calibri,Carlito,"Segoe UI",Arial,sans-serif;
+  --display:Archivo,"Segoe UI",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0B1220; --surface:#111A2E; --ink:#EEF3FB; --ink-2:#C4D1EA; --muted:#93A4C3;
-  --line:#24324F; --navy:#C9D9F5; --blue:#8FB0EA; --sky:#5F85CC; --wash:#16233D;
-  --table:#14213D; --table-edge:#2A3B5E; --seat:#0B1220; --seat-ink:#EEF3FB;
-  --good:#4ADE80; --warn:#F5B44A; color-scheme:dark}}
+  --bg:#101E2C; --surface:#08121D; --ink:#E7EEF6; --ink-2:#B6C6D8; --muted:#8DA2B8;
+  --line:#22384E; --navy:#7FB2E8; --blue:#3D8FDE; --sky:#7FB2E8; --wash:#16283A;
+  --table:#16283A; --table-edge:#33465E; --seat:#08121D; --seat-ink:#E7EEF6;
+  --good:#77C4A3; --warn:#D9B461; --crit:#E39177; --deep:#0B1A2B; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0B1220; --surface:#111A2E; --ink:#EEF3FB; --ink-2:#C4D1EA; --muted:#93A4C3;
-  --line:#24324F; --navy:#C9D9F5; --blue:#8FB0EA; --sky:#5F85CC; --wash:#16233D;
-  --table:#14213D; --table-edge:#2A3B5E; --seat:#0B1220; --seat-ink:#EEF3FB;
-  --good:#4ADE80; --warn:#F5B44A; color-scheme:dark}
+  --bg:#101E2C; --surface:#08121D; --ink:#E7EEF6; --ink-2:#B6C6D8; --muted:#8DA2B8;
+  --line:#22384E; --navy:#7FB2E8; --blue:#3D8FDE; --sky:#7FB2E8; --wash:#16283A;
+  --table:#16283A; --table-edge:#33465E; --seat:#08121D; --seat-ink:#E7EEF6;
+  --good:#77C4A3; --warn:#D9B461; --crit:#E39177; --deep:#0B1A2B; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.5;margin:0}
 .wrap{max-width:1120px;margin:0 auto;padding-inline:16px;padding-block:40px 72px}
-h1,h2,h3{margin:0;text-wrap:balance;color:var(--ink)}
-h1{font-size:clamp(34px,5.6vw,58px);line-height:1.02;letter-spacing:-.01em}
-h2{font-size:clamp(24px,3vw,32px);line-height:1.1}
+h1,h2,h3{margin:0;text-wrap:balance;color:var(--ink);font-family:var(--display)}
+h1{font-size:clamp(33px,4.6vw,44px);line-height:1.12;letter-spacing:-.02em;font-weight:800}
+h2{font-size:clamp(28px,3.4vw,36px);line-height:1.12;letter-spacing:-.02em;font-weight:700}
 h3{font-size:19px}
 p{margin:0}
-.kicker{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);font-weight:700}
-.lead{font-size:clamp(17px,2vw,20px);color:var(--ink-2);max-width:62ch}
+.kicker{font-family:var(--display);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--navy);font-weight:600}
+.lead{font-size:19px;line-height:1.55;color:var(--ink-2);max-width:60ch}
 .sub{color:var(--muted);max-width:68ch}
 header{display:grid;gap:14px}
 .meta{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--muted);font-size:15px}
 .meta b{color:var(--ink)}
-section{margin-top:64px;display:grid;gap:14px}
+section{margin-top:84px;display:grid;gap:14px}
+@media (max-width:560px){section{margin-top:56px}}
 
 /* Boardroom */
 .room{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:20px;align-items:start;margin-top:8px}
-.table-wrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+.table-wrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;box-shadow:0 1px 2px rgba(12,28,48,.06),0 8px 24px rgba(12,28,48,.06)}
 svg{display:block;width:100%;height:auto}
 .seat{cursor:pointer;outline:none}
 .seat circle.ring{fill:var(--seat);stroke:var(--blue);stroke-width:2}
 .seat.always circle.ring{fill:var(--navy);stroke:var(--navy)}
 .seat.always text.abbr{fill:var(--seat)}
 .seat.outside circle.ring{stroke-dasharray:5 4}
-.seat text.abbr{fill:var(--seat-ink);font-weight:700;font-size:20px;text-anchor:middle;dominant-baseline:central;font-family:var(--font)}
+.seat text.abbr{fill:var(--seat-ink);font-weight:700;font-size:19px;text-anchor:middle;dominant-baseline:central;font-family:var(--display)}
 .seat text.name{fill:var(--muted);font-size:14px;text-anchor:middle;font-family:var(--font)}
 .seat:hover circle.ring,.seat:focus-visible circle.ring{stroke-width:4}
 .seat.selected circle.halo{opacity:1}
@@ -99,12 +101,12 @@ tr:last-child td{border-bottom:0}
 .where dt{color:var(--muted)}
 .where dd{margin:0;color:var(--ink-2)}
 
-.call{background:var(--navy);color:var(--seat);border-radius:14px;padding:22px;display:grid;gap:12px}
+.call{background:var(--deep);color:#E8EEF6;border-radius:14px;padding:22px;display:grid;gap:12px}
 .call .kicker{color:var(--sky)}
-.call code{font-family:var(--mono);font-size:15px;background:color-mix(in srgb,var(--seat) 10%,transparent);padding:12px 14px;border-radius:8px;display:block;overflow-x:auto;white-space:nowrap}
-.call button{justify-self:start;font:700 15px var(--font);color:var(--navy);background:var(--seat);border:0;border-radius:8px;padding:9px 16px;cursor:pointer}
+.call code{font-family:var(--mono);font-size:14px;color:#E8EEF6;background:rgba(255,255,255,.08);padding:12px 14px;border-radius:8px;display:block;overflow-x:auto;white-space:nowrap}
+.call button{justify-self:start;font:600 15.5px var(--display);color:#014274;background:#FFFFFF;border:0;border-radius:8px;padding:9px 16px;cursor:pointer}
 .call button:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
-.call p{color:color-mix(in srgb,var(--seat) 78%,transparent)}
+.call p{color:#9DB0C6}
 
 .team{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .team div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:6px;align-content:start;min-width:0}
@@ -114,7 +116,7 @@ tr:last-child td{border-bottom:0}
 .gates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .gates div{border-radius:12px;padding:16px;display:grid;gap:6px;background:var(--surface);border:1px solid var(--line)}
 .gates b{font-size:13px;letter-spacing:.1em;text-transform:uppercase}
-.gates .free b{color:var(--good)} .gates .ask b{color:var(--warn)} .gates .never b{color:#C2410C}
+.gates .free b{color:var(--good)} .gates .ask b{color:var(--warn)} .gates .never b{color:var(--crit)}
 .gates p{color:var(--ink-2);font-size:15px}
 @media (max-width:860px){.team{grid-template-columns:repeat(2,minmax(0,1fr))}.gates{grid-template-columns:1fr}}
 @media (max-width:480px){.team{grid-template-columns:1fr}}
@@ -208,7 +210,7 @@ tr:last-child td{border-bottom:0}
   <section aria-labelledby="call-h">
     <div class="call">
       <div class="kicker">Call the board</div>
-      <h2 id="call-h" style="color:var(--seat)">Bring it a goal with a number in it</h2>
+      <h2 id="call-h" style="color:#FFFFFF">Bring it a goal with a number in it</h2>
       <code id="example">/board-meeting for Master Window Systems: build a campaign to get 20 new dealer leads a month by March</code>
       <button type="button" id="copy">Copy example</button>
       <p>Or just say "ask the board" with the problem in plain words. When the board has voted, say "execute".</p>

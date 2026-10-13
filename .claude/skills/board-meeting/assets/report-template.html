@@ -5,82 +5,84 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Board Resolution</title>
 <!--
-  AlphaCIS board report template. Brand: navy and blue, Calibri (see the owner preferences).
+  AlphaCIS board report template, built on the AlphaCIS Design System v2 (references/design-system.md).
   The Chair copies this file into the meeting folder as report.html (or fills it in an artifact) and replaces
   every {{PLACEHOLDER}} and every value in the BOARD_DATA object at the bottom.
   All charts and the seat map render from BOARD_DATA, so most edits happen there.
   Copy rules: no em dashes, headlines are claims, round numbers in the body,
   exact figures in the appendix, estimates labelled as estimates.
 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Carlito:wght@400;700&family=JetBrains+Mono:wght@500;600&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
 :root{
+  /* AlphaCIS Design System v2 tokens (board/design-system.md). Light values. */
   color-scheme:light;
-  --bg:#F4F6FA; --bg-2:#FFFFFF; --card:#FFFFFF;
-  --line:rgba(20,33,61,.10); --line-2:rgba(20,33,61,.18);
-  --text:#14213D; --text-2:#2B3A5C; --muted:#56637D; --dim:#7A859B;
-  --primary:#1F4E9C; --primary-2:#2F6BCB;
-  --grad:linear-gradient(135deg,#14213D,#1F4E9C);
-  --good:#15803D; --bad:#C2410C; --crit:#B91C1C;
-  --chart-cost:#8A93A0; --grid:rgba(20,33,61,.08);
-  --font-h:Calibri,Carlito,'Segoe UI',system-ui,sans-serif;
-  --font-b:Calibri,Carlito,'Segoe UI',system-ui,sans-serif;
+  --ground:#FFFFFF; --ground-2:#F4F7FA; --card:#FFFFFF; --card-2:#EEF3F8;
+  --deep:#0B2A44; --deep-2:#0F446B; --ink:#0C1C30; --ink-2:#3B4E66; --muted:#5C6E85;
+  --on-dark:#E8EEF6; --on-dark-muted:#9DB0C6; --line:#D7E0EA; --line-soft:#E7EDF3; --line-strong:#B9C6D6;
+  --brand-navy:#014274; --action:#1F6FB8; --accent-soft:#E6EFF7; --sky:#7FB2E8;
+  --critical:#A8452A; --critical-soft:#F7E9E4; --watch:#8A6114; --watch-soft:#F7F0DF; --steady:#2C6E56; --steady-soft:#E4F0EA;
+  --chart-cost:#9AA8B8; --grid:#E7EDF3;
+  --font-h:Archivo,"Segoe UI",Arial,sans-serif;
+  --font-b:Calibri,Carlito,"Segoe UI",Arial,sans-serif;
+  --font-m:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  /* aliases used by the components below */
+  --bg:var(--ground-2); --bg-2:var(--card-2); --text:var(--ink); --text-2:var(--ink-2); --dim:var(--muted);
+  --line-2:var(--line-strong); --primary:var(--brand-navy); --good:var(--steady); --bad:var(--watch); --crit:var(--critical);
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     color-scheme:dark;
-    --bg:#0B1220; --bg-2:#111A2E; --card:#14213D;
-    --line:rgba(157,183,232,.14); --line-2:rgba(157,183,232,.24);
-    --text:#F1F5FB; --text-2:#C9D6EE; --muted:#9DB0CF; --dim:#7F90AE;
-    --primary:#9DB7E8; --primary-2:#6F96DC;
-    --grad:linear-gradient(135deg,#C9D9F5,#9DB7E8);
-    --good:#4ADE80; --bad:#FB923C; --crit:#F87171;
-    --chart-cost:#6B7A96; --grid:rgba(157,183,232,.08);
+  --ground:#08121D; --ground-2:#101E2C; --card:#101E2C; --card-2:#16283A;
+  --deep:#0B1A2B; --deep-2:#16283A; --ink:#E7EEF6; --ink-2:#B6C6D8; --muted:#8DA2B8;
+  --on-dark:#E8EEF6; --on-dark-muted:#9DB0C6; --line:#22384E; --line-soft:#1A2E42; --line-strong:#33465E;
+  --brand-navy:#7FB2E8; --action:#3D8FDE; --accent-soft:#16283A; --sky:#7FB2E8;
+  --critical:#E39177; --critical-soft:#2C1B15; --watch:#D9B461; --watch-soft:#2B2413; --steady:#77C4A3; --steady-soft:#12291F;
+  --chart-cost:#4E6278; --grid:#1A2E42;
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
-  --bg:#0B1220; --bg-2:#111A2E; --card:#14213D;
-  --line:rgba(157,183,232,.14); --line-2:rgba(157,183,232,.24);
-  --text:#F1F5FB; --text-2:#C9D6EE; --muted:#9DB0CF; --dim:#7F90AE;
-  --primary:#9DB7E8; --primary-2:#6F96DC;
-  --grad:linear-gradient(135deg,#C9D9F5,#9DB7E8);
-  --good:#4ADE80; --bad:#FB923C; --crit:#F87171;
-  --chart-cost:#6B7A96; --grid:rgba(157,183,232,.08);
+  --ground:#08121D; --ground-2:#101E2C; --card:#101E2C; --card-2:#16283A;
+  --deep:#0B1A2B; --deep-2:#16283A; --ink:#E7EEF6; --ink-2:#B6C6D8; --muted:#8DA2B8;
+  --on-dark:#E8EEF6; --on-dark-muted:#9DB0C6; --line:#22384E; --line-soft:#1A2E42; --line-strong:#33465E;
+  --brand-navy:#7FB2E8; --action:#3D8FDE; --accent-soft:#16283A; --sky:#7FB2E8;
+  --critical:#E39177; --critical-soft:#2C1B15; --watch:#D9B461; --watch-soft:#2B2413; --steady:#77C4A3; --steady-soft:#12291F;
+  --chart-cost:#4E6278; --grid:#1A2E42;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:var(--font-b);line-height:1.5;-webkit-font-smoothing:antialiased}
 .wrap{max-width:1080px;margin:0 auto;padding:48px 16px 96px}
 h1,h2,h3,.num,.kicker,th{font-family:var(--font-h)}
-.kicker{text-transform:uppercase;letter-spacing:.18em;font-size:12px;color:var(--primary);font-weight:600}
-h1{font-size:clamp(30px,5.4vw,54px);line-height:1.05;letter-spacing:-.01em;margin:10px 0 14px;
-  background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-h2{font-size:clamp(22px,3.2vw,30px);line-height:1.15;letter-spacing:-.015em;margin-bottom:6px}
-h3{font-size:17px;line-height:1.3}
-p,li{color:var(--muted);font-size:15.5px}
-.lead{font-size:clamp(16px,2vw,19px);color:var(--text-2);max-width:62ch}
+.kicker{text-transform:uppercase;letter-spacing:.13em;font-size:12px;color:var(--brand-navy);font-weight:600}
+h1{font-size:clamp(33px,4.6vw,44px);line-height:1.12;letter-spacing:-.02em;font-weight:800;margin:10px 0 14px;text-wrap:balance}
+h2{font-size:clamp(28px,3.4vw,36px);line-height:1.12;letter-spacing:-.02em;font-weight:700;margin-bottom:6px;text-wrap:balance}
+h3{font-size:20px;line-height:1.3;letter-spacing:-.01em;font-weight:700}
+p,li{color:var(--ink-2);font-size:17px;line-height:1.6}
+.lead{font-size:19px;line-height:1.55;color:var(--ink-2);max-width:60ch}
 strong,b{color:var(--text);font-weight:700}
-section{margin-top:56px}
-.sub{color:var(--muted);margin-bottom:20px;max-width:70ch}
+section{margin-top:84px}
+@media (max-width:560px){section{margin-top:56px}}
+.sub{color:var(--ink-2);font-size:19px;line-height:1.55;margin-bottom:22px;max-width:60ch}
 .grid{display:grid;gap:14px}
 .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;min-width:0}
-.card.accent{border-left:3px solid var(--primary)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;min-width:0;box-shadow:0 1px 2px rgba(12,28,48,.06),0 8px 24px rgba(12,28,48,.06)}
+.card.accent{border-left:3px solid var(--watch);background:var(--watch-soft);box-shadow:none}
+.card.highlight{border-top:3px solid var(--brand-navy)}
 .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
-.badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--primary);color:var(--primary);
-  border-radius:100px;padding:6px 14px;font-family:var(--font-h);font-size:12px;letter-spacing:.12em;
-  text-transform:uppercase;font-weight:600}
-.badge.plain{border-color:var(--line-2);color:var(--muted)}
-.metric{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;min-width:0}
-.metric .num{font-size:clamp(26px,3.6vw,38px);font-weight:700;line-height:1.05;
-  background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 12px;font-family:var(--font-h);font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;background:var(--accent-soft);color:var(--brand-navy)}
+.badge.plain{background:transparent;border:1px solid var(--line-strong);color:var(--muted)}
+.metric{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;min-width:0}
+.metric .num{font-family:var(--font-m);font-size:34px;font-weight:600;line-height:1.1;color:var(--ink);font-variant-numeric:tabular-nums}
 .metric .lbl{font-size:13px;color:var(--muted);margin-top:6px}
 .metric .lbl b{font-weight:600}
-.chart-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;min-width:0}
+.chart-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;min-width:0}
 .chart-card h3{margin-bottom:2px}
-.chart-card .cap{font-size:13px;color:var(--muted);margin-bottom:12px}
+.chart-card .cap{font-size:15px;color:var(--muted);margin-bottom:12px}
 .chart-wrap{position:relative;height:280px}
 details.data{max-width:100%;overflow:hidden;margin-top:10px;font-size:13px;color:var(--muted)}
 details.data summary{cursor:pointer}
@@ -88,17 +90,20 @@ details.data summary{cursor:pointer}
 h1,h2,h3{overflow-wrap:anywhere}
 table{width:100%;border-collapse:collapse;font-size:14.5px}
 th,td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
-th{font-size:11.5px;text-transform:uppercase;letter-spacing:.11em;color:var(--muted);font-weight:600}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;background:var(--card-2)}
+td.money,.mono{font-family:var(--font-m);font-size:13px;font-weight:500}
 td{color:var(--text-2)}
 td.money,th.money{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .heat{display:grid;grid-template-columns:auto repeat(3,1fr);gap:4px;font-size:12.5px}
 .heat .ax{color:var(--muted);display:flex;align-items:center;justify-content:center;padding:4px;text-align:center}
-.heat .cell{min-height:64px;border-radius:8px;padding:8px;color:var(--text);display:flex;flex-wrap:wrap;gap:4px;align-content:flex-start}
+.heat .cell{min-height:64px;border-radius:8px;border:1px solid var(--line);padding:8px;color:var(--text);display:flex;flex-wrap:wrap;gap:4px;align-content:flex-start}
 .heat .chip{background:var(--bg-2);border:1px solid var(--line-2);border-radius:6px;padding:2px 7px;font-weight:600;font-size:12px}
 .seat{display:flex;flex-direction:column;gap:2px}
 .vote{font-family:var(--font-h);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
-.vote.approve{color:var(--good)} .vote.cond{color:var(--primary)} .vote.dissent{color:var(--crit)}
-.callout{border:1px solid var(--line-2);border-left:3px solid var(--crit);border-radius:12px;padding:18px;background:var(--card)}
+.vote{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 10px;justify-self:start;align-self:flex-start}
+.vote::before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor}
+.vote.approve{color:var(--steady);background:var(--steady-soft)} .vote.cond{color:var(--watch);background:var(--watch-soft)} .vote.dissent{color:var(--critical);background:var(--critical-soft)}
+.callout{border-left:3px solid var(--critical);border-radius:14px;padding:18px 20px;background:var(--critical-soft)}
 ul.clean{list-style:none;display:flex;flex-direction:column;gap:8px}
 ul.clean li b{margin-right:4px}
 svg text{font-family:var(--font-b)}
@@ -106,13 +111,22 @@ footer{margin-top:72px;padding-top:20px;border-top:1px solid var(--line);font-si
 @media (max-width:820px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3,.g2{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:no-preference){.fade{animation:fadeUp .5s ease-out both}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+/* The one dark band on the page: the verdict */
+header.verdict{background:var(--deep);color:var(--on-dark);border-radius:14px;padding:clamp(24px,4vw,44px)}
+header.verdict .kicker{color:var(--sky)}
+header.verdict h1{color:#FFFFFF}
+header.verdict .lead{color:var(--on-dark-muted)}
+header.verdict .badge{background:rgba(255,255,255,.10);color:var(--on-dark)}
+header.verdict .badge.plain{background:transparent;border-color:rgba(232,238,246,.28);color:var(--on-dark-muted)}
+code{font-family:var(--font-m);font-size:.85em}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <main class="wrap">
 
 <!-- 1. The answer first -->
-<header class="fade">
+<header class="fade verdict">
   <img id="clientLogo" alt="" style="display:none;height:44px;width:auto;margin-bottom:14px">
   <div class="kicker" id="kicker">AlphaCIS Board of Directors · {{MEETING_DATE}}</div>
   <h1>{{DECISION_AS_A_CLAIM}}</h1>
@@ -255,7 +269,8 @@ footer{margin-top:72px;padding-top:20px;border-top:1px solid var(--line);font-si
 <script>
 /* ===== Replace everything in BOARD_DATA. Example values are illustrative only. ===== */
 const BOARD_DATA = {
-  // Client meetings: { name: "Master Window Systems", logo: "data:image/png;base64,..." or null }. AlphaCIS meetings: null.
+  // Client meetings: { name: "Master Window Systems", logo: "data:image/png;base64,..." or null, accent: "#hex" or null }.
+  // Pick the accent per board/design-system.md section 3 and check it holds 4.5:1 on white. AlphaCIS meetings: null.
   client: null,
   votes: { approve: 4, conditions: 2, dissent: 0 },
   kpis: [
@@ -352,14 +367,14 @@ function drawHeat(){
   let h = `<div class="ax"></div>` + iv.map(i => `<div class="ax">Impact ${i}</div>`).join("");
   lv.forEach(l => { h += `<div class="ax">Likelihood ${l}</div>`;
     iv.forEach(i => { const s = score[l] * score[i];
-      const tint = s >= 6 ? css("--crit") : s >= 3 ? css("--primary") : css("--good");
+      const tint = s >= 6 ? css("--critical-soft") : s >= 3 ? css("--watch-soft") : css("--steady-soft");
       const chips = D.risks.filter(r => r.l === l && r.i === i).map(r => `<span class="chip" title="${r.risk}">${r.id}</span>`).join("");
-      h += `<div class="cell" style="background:color-mix(in srgb, ${tint} ${s >= 6 ? 30 : s >= 3 ? 22 : 14}%, transparent)">${chips}</div>`; }); });
+      h += `<div class="cell" style="background:${tint}">${chips}</div>`; }); });
   $("heat").innerHTML = h;
 }
 
 function drawMechanism(){
-  const svg = $("mechanism"), n = D.mechanism.length, ink = css("--text"), muted = css("--muted"), p = css("--primary");
+  const svg = $("mechanism"), n = D.mechanism.length, ink = css("--ink"), muted = css("--muted"), line = css("--line"), card = css("--card"), p = css("--action");
   const vertical = svg.parentElement.clientWidth < 560;
   const W = vertical ? 360 : 960, H = vertical ? n * 110 : 200, step = vertical ? 110 : W / n;
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
@@ -367,9 +382,9 @@ function drawMechanism(){
     const last = i === n - 1, bw = vertical ? 300 : step - 50, bh = vertical ? 70 : 100;
     const x = vertical ? 30 : i * step + 10, y = vertical ? i * step + 5 : 50;
     const arrow = last ? "" : vertical
-      ? `<path d="M${W / 2} ${y + bh + 6} v22 m-7 -8 l7 8 l7 -8" fill="none" stroke="${p}" stroke-width="2"/>`
-      : `<path d="M${x + bw + 16} ${y + bh / 2} h22 m-8 -7 l8 7 l-8 7" fill="none" stroke="${p}" stroke-width="2"/>`;
-    return `<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="12" fill="none" stroke="${last ? p : muted}" stroke-width="${last ? 2 : 1}"/>
+      ? `<path d="M${W / 2} ${y + bh + 6} v22 m-7 -8 l7 8 l7 -8" fill="none" stroke="${muted}" stroke-width="1.5"/>`
+      : `<path d="M${x + bw + 16} ${y + bh / 2} h22 m-8 -7 l8 7 l-8 7" fill="none" stroke="${muted}" stroke-width="1.5"/>`;
+    return `<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="12" fill="${card}" stroke="${last ? p : line}" stroke-width="${last ? 2 : 1}"/>
       <text x="${x + bw / 2}" y="${y + bh / 2 + 6}" text-anchor="middle" font-size="18" font-weight="600" fill="${ink}">${label}</text>` + arrow;
   }).join("");
 }
@@ -378,7 +393,7 @@ let charts = [];
 function drawCharts(){
   charts.forEach(c => c.destroy()); charts = [];
   const ink = css("--muted"), grid = css("--grid"), gold = css("--primary"), cost = css("--chart-cost"),
-        good = css("--good"), bad = css("--crit"), font = { family: "Calibri, Carlito, Segoe UI, system-ui, sans-serif", size: 12.5 };
+        good = css("--good"), bad = css("--crit"), font = { family: "Calibri, Carlito, Segoe UI, Arial, sans-serif", size: 13 };
   Chart.defaults.color = ink; Chart.defaults.font = font;
   const base = {
     responsive: true, maintainAspectRatio: false, interaction: { mode: "index", intersect: false },
@@ -418,7 +433,7 @@ function drawCampaign(){
              y: { grid: { display: false } } } },
     plugins: [{ id: "endLabels", afterDatasetsDraw(chart) {
       const { ctx } = chart, meta = chart.getDatasetMeta(0);
-      ctx.save(); ctx.fillStyle = css("--text-2"); ctx.font = "600 12.5px Calibri, Carlito, Segoe UI, sans-serif"; ctx.textBaseline = "middle";
+      ctx.save(); ctx.fillStyle = css("--text-2"); ctx.font = "600 12.5px 'JetBrains Mono', ui-monospace, monospace"; ctx.textBaseline = "middle";
       meta.data.forEach((bar, i) => ctx.fillText(C.funnel[i].volume.toLocaleString(), bar.x + 6, bar.y));
       ctx.restore(); } }] }));
   charts.push(new Chart($("budgetChart"), { type: "bar",
@@ -442,6 +457,8 @@ function drawStress(){
 
 function drawFrame(){
   if (D.client) {
+    // Client pieces use the client's single accent (design system, section 3); AlphaCIS colors never appear on them.
+    if (D.client.accent) document.documentElement.style.setProperty("--brand-navy", D.client.accent);
     $("kicker").textContent = `Prepared for ${D.client.name} · {{MEETING_DATE}}`;
     if (D.client.logo) { const l = $("clientLogo"); l.src = D.client.logo; l.alt = D.client.name; l.style.display = "block"; }
     $("footer").innerHTML = `Prepared by AlphaCIS for ${D.client.name}. Figures marked (est.) are estimates. This is business guidance, not legal, tax or investment advice.`;

@@ -12,6 +12,8 @@ Home of the AlphaCIS AI board of directors.
   - `company-profile.md`: the facts
   - `owner-briefing.md`: Dima's own briefing
   - `owner-preferences.md`: how he likes things done
+  - `design-system.md`: the AlphaCIS Design System v2, the source of truth for anything visual or
+    written for an audience (bundled into both skills at build time)
   - `meetings/`: the record of AlphaCIS decisions
   - `clients/<client>/`: each client's profile, meetings and execution plans, kept confidential to that client
   - `execution/`: work plans, logs, status reports and results for AlphaCIS plans

@@ -19,6 +19,7 @@ Files, with paths relative to this skill's folder:
 | `references/tools.md` | Which connector or skill each role uses, and which actions are writes. |
 | `templates/work-plan.md` | The work plan format. |
 | `templates/status-report.md` | The weekly status format. |
+| `references/design-system.md` | The AlphaCIS Design System v2 (added at build time). Content, Design and QA read it before every task. |
 
 ## Step 0: Know where you are
 Same rules as the board-meeting skill:

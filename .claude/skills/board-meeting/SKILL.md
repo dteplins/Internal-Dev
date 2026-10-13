@@ -25,7 +25,8 @@ Everything this skill needs ships with it, with paths relative to this skill's f
 | `references/skills-map.md` | Which of Dima's installed skills to use at each step (gotcha, stop-slop, marketing, LeadMagic, design, AlphaCIS methods). |
 | `references/clients.md` | Rules for client engagements. |
 | `templates/client-profile.md` | Starting profile for a new client. |
-| `assets/report-template.html` | The board report. All charts render from one data object. |
+| `assets/report-template.html` | The board report, built on the AlphaCIS Design System. All charts render from one data object. |
+| `references/design-system.md` | The AlphaCIS Design System v2 (added at build time from `board/design-system.md`). Read before designing or writing anything for an audience. |
 | `references/alphacis/` | Snapshot of AlphaCIS's company profile, Dima's briefing and his preferences (added at build time). |
 
 ## Step 0: Know where you are
@@ -219,8 +220,9 @@ sent or posted.
 Build one self-contained HTML report from `assets/report-template.html` by filling its
 `BOARD_DATA` object and `{{PLACEHOLDERS}}`. If a dataviz or artifact-design skill is available,
 load it first.
-- **AlphaCIS:** navy and blue, Calibri, written to Dima.
-- **Client:** set `BOARD_DATA.client`. It is written to the client ("you"), with their name and
+- **AlphaCIS:** the design system's tokens as already set in the template, written to Dima.
+- **Client:** set `BOARD_DATA.client`, including one accent chosen per the design system's client
+  range (section 3). It is written to the client ("you"), with their name and
   logo and AlphaCIS small in the footer.
 
 The report contains, in this order:

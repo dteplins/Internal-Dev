@@ -36,6 +36,7 @@ mkdir -p dist/board-meeting/references/alphacis
 for f in company-profile.md owner-briefing.md owner-preferences.md; do
   cp "board/$f" "dist/board-meeting/references/alphacis/$f"
 done
+cp board/design-system.md dist/board-meeting/references/design-system.md
 printf '# AlphaCIS snapshot\n\n%s\nA live `board/` folder or fresh connector data overrides these files.\n' "$STAMP" \
   > dist/board-meeting/references/alphacis/README.md
 check board-meeting; package board-meeting
@@ -44,4 +45,5 @@ check board-meeting; package board-meeting
 cp -R .claude/skills/execution-team dist/execution-team
 { sed 's/^# Team (live copy)/# Human Roster/' board/team.md; printf '\n_%s_\n' "$STAMP"; } \
   > dist/execution-team/references/roles/humans.md
+cp board/design-system.md dist/execution-team/references/design-system.md
 check execution-team; package execution-team

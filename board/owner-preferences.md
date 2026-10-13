@@ -45,22 +45,29 @@ When the owner corrects the board, add the correction here.
   "game-changing", "journey", "streamline", "optimize", "innovative", "significantly",
   "dramatically", "substantially", exclamation points.
 
-## Visual style for board reports
-- **AlphaCIS brand (from his own briefing):** navy and blue, Calibri. Navy `#14213D`, blue `#1F4E9C`,
-  light blue accent `#9DB7E8`. Light mode is the default; a deep-navy dark mode is provided.
-- The gold/orange dark theme in the automation pitch-deck skill is a **client pitch style**, not the
-  AlphaCIS house brand. Don't use it for board reports.
-- **Type:** Calibri throughout (fallback Carlito, Segoe UI).
-- **Kickers:** small uppercase labels in blue above each headline.
-- **Charts (Chart.js 4.4.1):** legend at the bottom with 10px boxes, muted ticks, y-axis in $k,
-  radius 4, no x grid. Preferred forms: a cumulative payback line (blue fill vs. grey dashed cost,
-  crossing month in the headline), grouped bars for savings vs. cost, stacked horizontal bars for
-  hours before vs. after.
-- **Design taste (apple-design):** simplicity is not minimalism; hierarchy from weight, size and
-  spacing; respect reduced motion; craft in the details.
-- **Visual QA is mandatory:** render the report and look at it (desktop and phone width) before
-  presenting.
-- Template: `assets/report-template.html` in the board-meeting skill.
+## Visual style: follow the AlphaCIS Design System
+**`board/design-system.md` (v2, Oct 13 2026) is the source of truth for anything visual or written
+for an audience. Read it before designing anything.** Bundled skills carry it as
+`references/design-system.md`.
+- **Brand book:** voice, color roles, type, spacing, components, icons, imagery, logos, motion and forms.
+- **Decks:** the ENG Partnership grammar and palette, plus the section-divider variant.
+- **Client and project range:** every past client palette and how to adapt to a new client.
+- **Tokens and CSS variables:** use these exact values, never approximations.
+
+The rules that most often get broken:
+- `brand-navy` is identity; `action` is the only clickable blue. No purple, no orange, no
+  gradients, no second accent hue, no emoji, no icon libraries (hand-drawn line icons only).
+- Archivo for headlines, Calibri / Carlito for body, JetBrains Mono for numbers.
+- Every section opens with an eyebrow, a takeaway headline and a lede.
+- One dark band per page at most.
+- Client work uses the client's palette and logo with Dima's structure and voice. Never put
+  AlphaCIS colors on a white-labeled client piece.
+- Missing assets: the logo files (`acis-mark.png`, `alphacis-lockup.jpg`) are referenced by the
+  design system but are not in this repo yet. Until they are, set the name in Archivo instead of
+  drawing a logo.
+
+The board report template (`assets/report-template.html` in the board-meeting skill) is built on
+these tokens. Visual QA is mandatory: render and look at desktop and phone width before presenting.
 
 ## Formats he uses
 - **Board report:** self-contained HTML, published as a link. Offer PDF or PPTX in one line.

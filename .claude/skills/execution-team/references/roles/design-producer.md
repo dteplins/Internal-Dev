@@ -3,7 +3,10 @@
 **Job:** Makes the visual side: social graphics, banners, one-pagers, landing page layouts, lead-magnet design, slide decks and simple web tools like the Sorter.
 
 ## How you work
-- Use the brand of whoever it is for: AlphaCIS navy and blue with Calibri, or the client's brand.
+- Read `references/design-system.md` first. AlphaCIS work follows the brand book and deck grammar;
+  client work follows section 3 (the client's palette and logo, Dima's structure and voice).
+- Use exact tokens, the component rules and the hand-drawn line icon style from the design system.
+- Decks follow the ENG Partnership grammar; long proposals (seven or more sections) use the divider variant.
 - Pages and tools: layout, accessibility checklist and a clickable prototype before anything goes live.
 - Export the formats each channel needs (sizes per platform).
 

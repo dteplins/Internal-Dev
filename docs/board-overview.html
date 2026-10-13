@@ -106,6 +106,18 @@ tr:last-child td{border-bottom:0}
 .call button:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
 .call p{color:color-mix(in srgb,var(--seat) 78%,transparent)}
 
+.team{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.team div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:6px;align-content:start;min-width:0}
+.team div.human{border-style:dashed}
+.team h3{font-size:17px}
+.team p{color:var(--muted);font-size:15px}
+.gates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.gates div{border-radius:12px;padding:16px;display:grid;gap:6px;background:var(--surface);border:1px solid var(--line)}
+.gates b{font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+.gates .free b{color:var(--good)} .gates .ask b{color:var(--warn)} .gates .never b{color:#C2410C}
+.gates p{color:var(--ink-2);font-size:15px}
+@media (max-width:860px){.team{grid-template-columns:repeat(2,minmax(0,1fr))}.gates{grid-template-columns:1fr}}
+@media (max-width:480px){.team{grid-template-columns:1fr}}
 @media (max-width:860px){.room{grid-template-columns:1fr}.where{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -151,6 +163,31 @@ tr:last-child td{border-bottom:0}
     </ol>
   </section>
 
+  <section aria-labelledby="team-h">
+    <div class="kicker">After the vote</div>
+    <h2 id="team-h">The execution team carries it out</h2>
+    <p class="sub">Say "execute" and the Project Manager turns the resolution into a work plan. AI operators do the work in your connected tools; people get clear briefs for what only a person can do. A weekly status checks the KPIs against the board's targets.</p>
+    <div class="team">
+      <div><h3>Project Manager</h3><p>Work plan, owners, dates, capacity check, approval batches, weekly status.</p></div>
+      <div><h3>Content Producer</h3><p>Emails, posts, scripts, page copy, ads, video scripts, proposals.</p></div>
+      <div><h3>Design Producer</h3><p>Graphics, landing pages, decks and tools like the Sorter.</p></div>
+      <div><h3>Marketing Ops</h3><p>Builds campaigns in SalesHubHQ and ad platforms, paused until approved.</p></div>
+      <div><h3>Sales Ops</h3><p>Target lists, buyers, Mark's call lists, follow-up rhythm.</p></div>
+      <div><h3>Automation Engineer</h3><p>Zapier, Make and Claude Code builds, switched off until approved.</p></div>
+      <div><h3>Finance Ops</h3><p>Budget vs. actual, draft estimates and invoices, collections.</p></div>
+      <div><h3>Analyst</h3><p>Weekly KPI actuals, trend vs. target, calls the kill-switch.</p></div>
+      <div><h3>QA and Compliance</h3><p>Checks every outward item for accuracy, voice, law and ethics.</p></div>
+      <div class="human"><h3>Mark</h3><p>Calls and bookings, from daily lists and scripts.</p></div>
+      <div class="human"><h3>Joshua</h3><p>Technical tasks with clear done criteria.</p></div>
+      <div class="human"><h3>Dima and Allen</h3><p>Approve batches, run Architecture Sessions, own operations changes.</p></div>
+    </div>
+    <div class="gates">
+      <div class="free"><b>On its own</b><p>Research, drafts, designs, internal trackers, automations built but switched off.</p></div>
+      <div class="ask"><b>Your OK first</b><p>Anything sent, posted, published or spent, and changes to QuickBooks or the CRM. One batch, exactly as it will go out.</p></div>
+      <div class="never"><b>Never</b><p>Payments, payroll, signing contracts, deleting data, breaking platform limits.</p></div>
+    </div>
+  </section>
+
   <section aria-labelledby="matrix-h">
     <div class="kicker">Who sits when</div>
     <h2 id="matrix-h">The problem decides the room</h2>
@@ -174,7 +211,7 @@ tr:last-child td{border-bottom:0}
       <h2 id="call-h" style="color:var(--seat)">Bring it a goal with a number in it</h2>
       <code id="example">/board-meeting for Master Window Systems: build a campaign to get 20 new dealer leads a month by March</code>
       <button type="button" id="copy">Copy example</button>
-      <p>Or just say "ask the board" with the problem in plain words.</p>
+      <p>Or just say "ask the board" with the problem in plain words. When the board has voted, say "execute".</p>
     </div>
   </section>
 </div>

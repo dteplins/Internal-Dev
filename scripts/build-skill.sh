@@ -1,42 +1,47 @@
 #!/usr/bin/env bash
-# Builds the universal board-meeting skill for claude.ai, Cowork and Claude Code.
-# Source of truth:
-#   .claude/skills/board-meeting/  the skill (procedure, directors, playbooks, template)
-#   board/                         AlphaCIS data (profile, briefing, preferences)
-# Output: dist/board-meeting.skill (a zip). Install it from the file card's "Save skill" button,
-# or upload it in claude.ai under Settings > Capabilities > Skills.
+# Builds the installable skills for claude.ai, Cowork and Claude Code.
+#   board-meeting   the board of directors (bundles a dated snapshot of board/ profile data)
+#   execution-team  the team that executes board resolutions (bundles the team roster)
+# Standing approvals are never bundled: they only apply where the live board/ folder exists,
+# so a revoked approval can't linger in an installed copy.
+# Output: dist/<skill>.skill. Install from the file card's "Save skill" button, or upload in
+# claude.ai under Settings > Capabilities > Skills.
 set -euo pipefail
 cd "$(dirname "$0")/.."
+rm -rf dist && mkdir -p dist
+STAMP="Built $(date -u +%Y-%m-%d) from the Internal-Dev repo (commit $(git rev-parse --short HEAD))."
 
-SRC=.claude/skills/board-meeting
-OUT=dist/board-meeting
-rm -rf dist && mkdir -p "$OUT"
-cp -R "$SRC"/. "$OUT"/
-
-# Bundle a dated snapshot of the AlphaCIS data so the skill works where there is no repo.
-mkdir -p "$OUT/references/alphacis"
-for f in company-profile.md owner-briefing.md owner-preferences.md; do
-  cp "board/$f" "$OUT/references/alphacis/$f"
-done
-{
-  echo "# AlphaCIS snapshot"
-  echo
-  echo "Built $(date -u +%Y-%m-%d) from the Internal-Dev repo (commit $(git rev-parse --short HEAD))."
-  echo "A live \`board/\` folder or fresh connector data overrides these files."
-} > "$OUT/references/alphacis/README.md"
-
-# Refuse to ship em dashes or stray placeholders in the instructions.
-if grep -rln $'—' "$OUT" --include=*.md; then echo "Em dash found in the files above"; exit 1; fi
-
-# Package: the archive's top-level folder must be the skill name.
-( cd dist && python3 - <<'PY'
-import zipfile, pathlib
-root = pathlib.Path("board-meeting")
-with zipfile.ZipFile("board-meeting.skill", "w", zipfile.ZIP_DEFLATED) as z:
+package() {
+  local name=$1
+  ( cd dist && python3 - "$name" <<'PY'
+import sys, zipfile, pathlib
+name = sys.argv[1]; root = pathlib.Path(name)
+with zipfile.ZipFile(f"{name}.skill", "w", zipfile.ZIP_DEFLATED) as z:
     for p in sorted(root.rglob("*")):
         if p.is_file() and p.name != ".DS_Store":
             z.write(p, p.as_posix())
     count = len(z.namelist())
-print(f"Built dist/board-meeting.skill ({count} files)")
+print(f"Built dist/{name}.skill ({count} files)")
 PY
-)
+  )
+}
+
+check() {
+  if grep -rln $'—' "dist/$1" --include=*.md; then echo "Em dash found in the files above"; exit 1; fi
+}
+
+# board-meeting
+cp -R .claude/skills/board-meeting dist/board-meeting
+mkdir -p dist/board-meeting/references/alphacis
+for f in company-profile.md owner-briefing.md owner-preferences.md; do
+  cp "board/$f" "dist/board-meeting/references/alphacis/$f"
+done
+printf '# AlphaCIS snapshot\n\n%s\nA live `board/` folder or fresh connector data overrides these files.\n' "$STAMP" \
+  > dist/board-meeting/references/alphacis/README.md
+check board-meeting; package board-meeting
+
+# execution-team
+cp -R .claude/skills/execution-team dist/execution-team
+{ sed 's/^# Team (live copy)/# Human Roster/' board/team.md; printf '\n_%s_\n' "$STAMP"; } \
+  > dist/execution-team/references/roles/humans.md
+check execution-team; package execution-team

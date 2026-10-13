@@ -254,7 +254,9 @@ Keep the reply short; the report carries the detail.
 
    For the reminder, use whatever scheduling the surface has: scheduled tasks in Cowork, or
    send_later / triggers in Claude Code. Only set it if Dima says yes.
-4. **Save the record:**
+4. **Hand off to the execution team.** If the execution-team skill is installed, end with one line:
+   "Say *execute* and the team will turn this into a work plan." Only start it if Dima says so.
+5. **Save the record:**
    - **With a workspace:** save the meeting folder (and commit it, if it is a git repo).
    - **Without one:** offer the resolution as a file or paste block.
 

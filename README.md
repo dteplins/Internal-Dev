@@ -5,9 +5,27 @@ recommendation as a visual report: charts, diagrams, action plan, risks and the 
 on AlphaCIS's business or any client's. For build asks like a marketing campaign, they also
 produce reviewed drafts of the campaign itself.
 
+## After the vote: the execution team
+
+The board decides; the execution team (`/execute`) carries it out.
+
+- **Project Manager (Claude):** turns the resolution into a work plan with owners, dates,
+  dependencies and a capacity check on real people.
+- **Eight AI operators:** Content, Design, Marketing Ops, Sales Ops, Automation Engineer,
+  Finance Ops, Analyst, QA and Compliance.
+- **People:** Mark, Joshua and Allen get clear task briefs for the work only a person can do.
+- **Approval gates** (`.claude/skills/execution-team/references/approval-gates.md`):
+  - research, drafts and internal setup happen on their own
+  - anything external, costly or record-changing waits for your OK, in one batch
+  - payments, contracts and deletions never happen
+- **Standing approvals:** pre-approve a category in `board/standing-approvals.md` to give the
+  team more room.
+- **Weekly status:** KPI actuals against the board's targets. If a KPI crosses the kill-switch
+  threshold, the team stops and recommends reconvening the board.
+
 ## Install it everywhere
 
-`dist/board-meeting.skill` is the installable skill. It works in claude.ai chat, Cowork and Claude Code.
+`dist/board-meeting.skill` and `dist/execution-team.skill` are the installable skills. They work in claude.ai chat, Cowork and Claude Code.
 1. Open the file in the Claude app and click **Save skill**, or upload it in claude.ai under
    **Settings > Capabilities > Skills**.
 2. It syncs to your account, like your other AlphaCIS skills.

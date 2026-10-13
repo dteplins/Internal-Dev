@@ -67,12 +67,10 @@ three votes, you see it in the report. It is never hidden.
 - **Correct the board** when it gets something wrong. It writes the fix into the profile or
   preferences so the next meeting uses it.
 
+- **Fill the gaps** in `board/company-profile.md`. QuickBooks now supplies revenue, margin, cash
+  and receivables. Still missing:
+  - automation revenue split from managed IT
+  - client churn
+  - outbound metrics (dials, sessions booked, close rate)
 
-The more of `board/company-profile.md` you fill in, the sharper the answers. The biggest gaps
-right now:
-- revenue, client count and margin by line
-- cash
-- outbound metrics
-
-Connecting QuickBooks also helps: the CFO reads it directly. Directors only read connected
-systems; they never send, post or change anything.
+  Directors only read connected systems; they never send, post or change anything.

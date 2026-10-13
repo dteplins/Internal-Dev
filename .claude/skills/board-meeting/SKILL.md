@@ -36,6 +36,11 @@ Save everything for this meeting in `board/meetings/<YYYY-MM-DD>-<short-slug>/`.
    QuickBooks (P&L, cash flow, AR aging, sales by customer), Supermetrics or
    Windsor.ai (marketing), Fathom / Granola / Wispr Flow (what clients said),
    Google Drive / SharePoint (plans, past decks), and web research.
+   For QuickBooks, call `company_info` first, then use the `_text` report
+   variants (balance sheet, sales by customer, sales by product, A/R aging,
+   P&L, cash flow) so the numbers land in the brief as text. Record the pull
+   date next to every figure. If a report fails, say so in the brief rather
+   than estimating around it silently.
 4. Write `brief.md`: the decision question, context, facts with sources,
    assumptions, constraints, and what a good answer must include.
 

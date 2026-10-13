@@ -103,14 +103,73 @@ Essential Care is a Tier 1 AI-assisted help desk only. It has no SLA, no project
 **Operating stack:** Atera (RMM and tickets), Cynet (security / EDR), QuickBooks (billing; accepted
 estimates become projects automatically), SalesHubHQ (CRM), Outlook/Teams, Zapier and Make, GitHub.
 
-## Numbers (TODO: the board needs these most)
-- **Revenue, client count and margin by line (managed IT vs. automation vs. projects):** TODO, or connect QuickBooks.
-- **Monthly recurring revenue:** TODO
-- **Cash in bank / runway:** TODO
-- **Managed seats / devices:** TODO
-- **Client churn, last 12 months:** TODO
-- **Outbound metrics:** TODO. Covers dials, connects, Architecture Sessions booked and the session-to-close rate.
-- **Technician utilization / ticket volume:** TODO (Atera)
+## Numbers (from QuickBooks, pulled Oct 13 2026)
+Source: QuickBooks Online, company "Alpha CIS", accrual basis. Re-pull before any meeting that
+depends on them; these go stale.
+
+**Balance sheet, as of Oct 13 2026**
+| Line | Amount |
+|---|---:|
+| Bank (BUS COMPLETE CHK 0911) | $63,253.57 |
+| Undeposited funds | $20,019.01 |
+| Accounts receivable | $19,199.78 |
+| Total assets | $102,472.37 |
+| GA Dept. of Revenue payable (sales tax) | $5,645.51 |
+| Prepaid revenue | $250.43 |
+| Total liabilities | $5,895.94 |
+| Accounts payable | $0.00 |
+| Owner's pay and personal expenses (equity draw) | -$105,928.00 |
+| Retained earnings | $274,752.89 |
+| Net income, year to date | $38,786.75 |
+
+Equity also shows partner accounts for **Allen** (-$59,967.06) and **Dmitriy Teplinskiy**
+(-$51,068.15). TODO: confirm who Allen is; the briefing doesn't mention a second partner.
+
+**Sales by customer, Oct 1 2025 to Sep 30 2026:** $627,291.45 total across 61 customers.
+| Top customers | Sales |
+|---|---:|
+| TME & MEM Enterprises | $122,067.39 |
+| IMG | $72,296.20 |
+| Carlisle Construction, LLC | $68,931.20 |
+| Master Window Systems | $46,710.06 |
+| Templar Media | $40,226.35 |
+| Vantage Point Solutions | $33,737.40 |
+| Buckhead America | $14,949.00 |
+| Bloomn Gardens | $14,080.97 |
+| BL Team | $13,808.60 |
+| Dillon Productions | $13,224.76 |
+
+Full list in QuickBooks. Tomlin Group billed $1,350.00 in the period; IDS and BurgerFi do not appear.
+
+**Sales by product/service, last 12 months** (QuickBooks item names)
+| Item | Sales |
+|---|---:|
+| Manage IT Services | $388,555.95 |
+| Labor | $89,857.12 |
+| Equipment | $53,622.14 |
+| License | $51,074.14 |
+| Services | $22,649.85 |
+| Hosting | $12,407.57 |
+| MSP Labor Rate | $7,495.00 |
+| Workstation Support & Monitoring | $5,070.00 |
+| On-Site Support | $4,042.50 |
+| Managed Backup | $2,852.50 |
+| Cybersecurity Services | $2,640.00 |
+| Late Fee | $1,802.08 |
+
+The item list does not separate AI automation revenue from other labor or services.
+
+**A/R aging, as of Oct 13 2026:** $19,199.78 total, $1,042.40 current, $18,157.38 overdue.
+Largest overdue: Green Pastures $6,321.00 (of which $4,257.00 is 91+ days), Vantage Point
+Solutions $2,773.81 (1 to 30), Master Window Systems $1,381.54 (1 to 30), Specialized Printing
+$1,309.00 (91+), Paragon Distribution $1,196.12 (91+). Several customers carry credit balances.
+
+**Still missing**
+- **Profit and loss / margins / expenses:** blocked. QuickBooks requires an industry on the
+  company profile before it returns the P&L (the file shows code 541990).
+- **Cash flow:** same block likely applies.
+- **Revenue split, managed IT vs. automation:** not separable from current QuickBooks items.
+- **Client churn, outbound metrics, technician utilization:** not in QuickBooks. TODO.
 
 ## Goals and constraints
 - **12-month goal:** TODO (the inferred direction is to grow automation as a second line on top of managed IT)
@@ -123,7 +182,7 @@ These come from Dima's briefing.
 1. When does Mark's automation outreach go live, and what booking rate counts as success?
 2. Is 3 to 5 Architecture Sessions a week enough when Dima runs every one?
 3. How is engineering capacity covered after Adam's passing?
-4. Revenue, client count and margin by line are still missing.
+4. Margin by line is still missing (P&L blocked; automation revenue not split out in QuickBooks).
 5. Does BurgerFi corporate approve the Olo change, and can it become a repeatable franchisee product?
 
 ## Connected data sources

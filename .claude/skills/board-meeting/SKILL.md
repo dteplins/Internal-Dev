@@ -11,8 +11,17 @@ it to the owner.
 
 The directors are subagents in `.claude/agents/board-*.md`. Their rules of debate
 and answer formats are in `board/charter.md`. The business is described in
-`board/company-profile.md`, and how the owner likes things done is in
-`board/owner-preferences.md`. Read all three before you start.
+`board/company-profile.md` and `board/owner-briefing.md` (the owner's own
+briefing: strategy, team, locked decisions, open questions). How the owner likes
+things done is in `board/owner-preferences.md`. Read all four before you start.
+
+Three standing rules from the owner:
+- **Identity guardrail:** AlphaCIS is managed IT first, automation second. A
+  resolution that would change that must say so in its first line.
+- **Locked decisions** listed in the company profile are not reopened unless a
+  director brings new evidence, and the report must flag that it is reopening one.
+- **Write like Dima wants:** verdict first, blunt, sourced, no em dashes, no
+  banned words (see owner-preferences), round numbers, labelled estimates.
 
 Save everything for this meeting in `board/meetings/<YYYY-MM-DD>-<short-slug>/`.
 
@@ -126,10 +135,13 @@ connected source. Label estimates as estimates.
 
 ## Step 7: Present
 
+Keep the chat reply short. Dima wants minimal explanation; the report carries the detail.
+
 1. Publish `report.html` with the Artifact tool (icon: `chart`), and give the
    owner the link.
-2. In chat, give a five-line summary: the decision, the vote, the top number,
-   the first action this week, and any dissent.
+2. In chat, give at most five lines: the decision, the vote, the top number,
+   the first action this week, and any dissent. End with flags, not a recap:
+   which numbers are assumptions and where the case could break.
 3. Offer follow-ups in one line: PDF or PPTX export, a deeper dive by one
    director, or re-convening after the first KPI review date.
 4. Commit the meeting folder to git so the board keeps a record of past decisions.
@@ -139,3 +151,15 @@ connected source. Label estimates as estimates.
 Before Step 1, skim `board/meetings/*/resolution-final.md` for past decisions
 on related topics. Directors should be told about relevant earlier resolutions
 so the board stays consistent or explicitly explains why it is changing course.
+
+## Revisions
+
+When the owner asks for a change to a report, make that targeted change and
+republish to the same link. Don't rebuild sections he didn't mention. If the
+change alters the decision itself (not just wording or visuals), re-run the
+vote with the seated directors first.
+
+## When the owner corrects the board
+
+Add the correction to `board/owner-preferences.md` (style) or
+`board/company-profile.md` (facts) so every future meeting uses it.

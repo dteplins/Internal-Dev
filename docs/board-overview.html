@@ -113,7 +113,7 @@ tr:last-child td{border-bottom:0}
 <div class="wrap">
   <header>
     <div class="kicker">AlphaCIS · Board of Directors</div>
-    <h1>Ten seats. One agreed answer.</h1>
+    <h1>Eleven seats. One agreed answer.</h1>
     <p class="lead">An AI board that researches your problem, argues it out, stress-tests the plan and votes before anything reaches you. It works on AlphaCIS's business and on any client's.</p>
     <div class="meta"><span><b>Owners:</b> Dima and Allen, 50/50</span><span><b>Chair:</b> Claude (runs the meeting, never votes)</span><span><b>Seated per meeting:</b> 5 to 7</span></div>
   </header>
@@ -123,11 +123,11 @@ tr:last-child td{border-bottom:0}
     <h2 id="room-h">Select a seat to see how that director thinks</h2>
     <div class="room">
       <div class="table-wrap">
-        <svg viewBox="0 0 760 460" role="group" aria-label="Boardroom table with the Chair at the head and ten director seats" id="room"></svg>
+        <svg viewBox="0 0 760 460" role="group" aria-label="Boardroom table with the Chair at the head and eleven director seats" id="room"></svg>
         <div class="legend">
           <span><i class="dot always"></i>Always seated</span>
           <span><i class="dot"></i>Seated when the problem needs them</span>
-          <span><i class="dot outside"></i>Outside voice (no department)</span>
+          <span><i class="dot outside"></i>Buyer side (no department)</span>
         </div>
       </div>
       <aside class="dossier" id="dossier" aria-live="polite"></aside>
@@ -146,7 +146,7 @@ tr:last-child td{border-bottom:0}
       <li><h3>Draft resolution</h3><p>Decision, plan with owners and dates, financials, KPIs, kill-switch, confidence.</p></li>
       <li class="key"><span class="tag">gotcha</span><h3>Stress test</h3><p>The Independent Director runs gotcha: ten attack passes, research on every serious gap. Fatal gaps get fixed before the vote.</p></li>
       <li class="key"><span class="tag">Up to 3 rounds</span><h3>Vote</h3><p>Approve, approve with conditions, or dissent. Dissent that survives three rounds is shown to you, never hidden.</p></li>
-      <li class="build"><span class="tag">Build asks</span><h3>Execution package</h3><p>Campaign drafts from your marketing skills, reviewed by CMO, Customer Voice and Independent, then cleaned by stop-slop.</p></li>
+      <li class="build"><span class="tag">Build asks</span><h3>Execution package</h3><p>Campaign drafts from your marketing skills, reviewed by CMO, Buyer Psychologist, Customer Voice and Independent, then cleaned by stop-slop.</p></li>
       <li><h3>Report</h3><p>Verdict first, at least three charts, a diagram, the vote, risks, stress test and next steps. Five lines in chat.</p></li>
     </ol>
   </section>
@@ -216,6 +216,11 @@ const D = [
     asks:["Would I even notice this?","What does this cost me: money, time, looking bad to my boss?","What makes me reply, and what makes me delete it?","Which words sound like a vendor talking?"],
     skills:["marketing-psychology","ads-research","competitor-profiling","onboarding-cro"],
     watch:"Jargon, feature lists, claims with no proof, and asks that are too big too early." },
+  { id:"psychologist", short:"Psychology", abbr:"PSY", title:"Buyer Psychologist", outside:true,
+    owns:"The buyer's mind: why people decide, stall or say no, across everyone in the buying group.",
+    asks:["What pushes them to change, and what anxiety and habit hold them back?","Who is in the buying group, and what is each afraid of being blamed for?","How aware are they of the problem and of solutions?","What proof do they need before the smallest safe next step?"],
+    skills:["marketing-psychology","ads-research","competitor-profiling","onboarding-cro"],
+    watch:"Designing for a rational buyer who doesn't exist; ignoring the person who can veto; manipulation dressed up as persuasion." },
   { id:"cto", short:"Technology", abbr:"CTO", title:"Chief Technology Officer",
     owns:"Technology: product, tooling, data, AI and automation, security, and build vs. buy.",
     asks:["Can AI or automation do this cheaper than people?","Build, buy or partner, and the total cost of ownership?","What data do we need, and is it clean?","What are the security and lock-in risks?"],
@@ -252,14 +257,14 @@ const o1 = el("text", { x:707, y:214, "text-anchor":"middle", "font-size":12.5, 
 const o2 = el("text", { x:707, y:238, "text-anchor":"middle", "font-size":17, "font-weight":700, fill:"var(--ink)" }, own); o2.textContent = "Dima";
 const o3 = el("text", { x:707, y:258, "text-anchor":"middle", "font-size":17, "font-weight":700, fill:"var(--ink)" }, own); o3.textContent = "Allen";
 // Seats: 5 along the top edge, 5 along the bottom
-const xs = [210, 305, 400, 495, 590];
-const pos = [...xs.map(x => ({ x, y:72, lab:-1 })), ...xs.map(x => ({ x, y:388, lab:1 }))];
+const topRow = [210, 305, 400, 495, 590], bottomRow = [200, 280, 360, 440, 520, 600];
+const pos = [...topRow.map(x => ({ x, y:72, lab:-1 })), ...bottomRow.map(x => ({ x, y:388, lab:1 }))];
 const seats = {};
 D.forEach((d, i) => {
   const p = pos[i];
   const g = el("g", { class:"seat" + (d.always ? " always" : "") + (d.outside ? " outside" : ""), tabindex:0, role:"button", "aria-label":`${d.title}${d.always ? ", always seated" : ""}` });
-  el("circle", { class:"halo", cx:p.x, cy:p.y, r:38 }, g);
-  el("circle", { class:"ring", cx:p.x, cy:p.y, r:31 }, g);
+  el("circle", { class:"halo", cx:p.x, cy:p.y, r:p.lab > 0 ? 34 : 38 }, g);
+  el("circle", { class:"ring", cx:p.x, cy:p.y, r:p.lab > 0 ? 28 : 31 }, g);
   const a = el("text", { class:"abbr", x:p.x, y:p.y }, g); a.textContent = d.abbr;
   const n = el("text", { class:"name", x:p.x, y:p.y + (p.lab < 0 ? -44 : 56) }, g); n.textContent = d.short;
   g.addEventListener("click", () => select(d.id));
@@ -273,7 +278,7 @@ function select(id){
   document.getElementById("dossier").innerHTML = `
     <div class="role">${d.abbr}</div>
     <h3>${d.title}</h3>
-    <div><span class="badge ${d.always ? "always" : ""}">${d.always ? "Always seated" : d.outside ? "Outside voice" : "Seated by problem type"}</span></div>
+    <div><span class="badge ${d.always ? "always" : ""}">${d.always ? "Always seated" : d.outside ? "Buyer side" : "Seated by problem type"}</span></div>
     <p class="owns">${d.owns}</p>
     <div><div class="label">Always asks</div><ul>${d.asks.map(q => `<li>${q}</li>`).join("")}</ul></div>
     <div><div class="label">Skills it reaches for</div><div class="chips">${d.skills.map(s => `<span class="chip">${s}</span>`).join("")}</div></div>
@@ -282,10 +287,10 @@ function select(id){
 select("cfo");
 
 // Seating matrix: 2 = always, 1 = seated, 0.5 = conditional
-const cols = ["cfo","independent","ceo","cmo","cro","coo","cto","counsel","chro","customer"];
+const cols = ["cfo","independent","ceo","cmo","cro","coo","cto","counsel","chro","psychologist","customer"];
 const rows = [
-  ["Marketing campaign, leads, brand", { cmo:1, cro:1, customer:1, coo:1, counsel:.5 }],
-  ["Pricing, offers, packaging", { cro:1, customer:1, ceo:1 }],
+  ["Marketing campaign, leads, brand", { cmo:1, cro:1, psychologist:1, customer:1, coo:1, counsel:.5 }],
+  ["Pricing, offers, packaging", { cro:1, psychologist:1, customer:1, ceo:1 }],
   ["Cash, costs, profitability", { coo:1, ceo:1 }],
   ["Hiring, team, workload", { chro:1, coo:1 }],
   ["Tools, AI, automation, product", { cto:1, coo:1 }],

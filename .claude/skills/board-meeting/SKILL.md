@@ -1,6 +1,6 @@
 ---
 name: board-meeting
-description: Convene an AI board of directors (CEO, CFO, CMO, CRO, COO, CTO, Counsel, People, Customer Voice, Independent) on a business problem or goal, for AlphaCIS or any client. The directors research it, debate it across rounds, vote until they reach consensus, and present one agreed recommendation as a visual report with charts, diagrams and text. For build asks (marketing campaign, launch, outbound push) they also produce reviewed drafts to carry it out. Use when Dima says "board meeting", "ask the board", "/board-meeting", "what would the board say", brings a business problem, decision or growth goal, or asks for help solving a client's business problem or building a client campaign. Works in claude.ai chat, Cowork and Claude Code.
+description: Convene an AI board of directors (CEO, CFO, CMO, CRO, COO, CTO, Counsel, People, Buyer Psychologist, Customer Voice, Independent) on a business problem or goal, for AlphaCIS or any client. The directors research it, debate it across rounds, vote until they reach consensus, and present one agreed recommendation as a visual report with charts, diagrams and text. For build asks (marketing campaign, launch, outbound push) they also produce reviewed drafts to carry it out. Use when Dima says "board meeting", "ask the board", "/board-meeting", "what would the board say", brings a business problem, decision or growth goal, or asks for help solving a client's business problem or building a client campaign. Works in claude.ai chat, Cowork and Claude Code.
 ---
 
 # Board Meeting
@@ -20,7 +20,7 @@ Everything this skill needs ships with it, with paths relative to this skill's f
 | File | What it is |
 |---|---|
 | `references/charter.md` | Rules of debate and every answer format. Give it to every director. |
-| `references/directors/<role>.md` | The ten director personas. |
+| `references/directors/<role>.md` | The eleven director personas. |
 | `references/playbooks/` | Procedures for recurring problem types (e.g. `marketing-campaign.md`). |
 | `references/skills-map.md` | Which of Dima's installed skills to use at each step (gotcha, stop-slop, marketing, LeadMagic, design, AlphaCIS methods). |
 | `references/clients.md` | Rules for client engagements. |
@@ -149,8 +149,8 @@ the directors the problem needs, five to seven in total:
 
 | Problem type | Add |
 |---|---|
-| Marketing campaign, leads, brand | cmo, cro, customer, coo |
-| Pricing, offers, packaging | cro, customer, ceo |
+| Marketing campaign, leads, brand | cmo, cro, psychologist, customer, coo |
+| Pricing, offers, packaging | cro, psychologist, customer, ceo |
 | Cash, costs, profitability | coo, ceo |
 | Hiring, team, workload | chro, coo |
 | Tools, AI, automation, product | cto, coo |
@@ -211,7 +211,7 @@ and brand.
 
 Run **stop-slop** on every draft.
 
-**Asset review:** the cmo, customer and independent directors read every draft against the
+**Asset review:** the cmo, psychologist, customer and independent directors read every draft against the
 resolution and the writing rules, and each returns keep / fix items. Apply the fixes. Nothing is
 sent or posted.
 

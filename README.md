@@ -1,6 +1,6 @@
 # AlphaCIS AI Board of Directors
 
-Ten AI directors who debate a business problem, vote until they agree, and hand you one
+Eleven AI directors who debate a business problem, vote until they agree, and hand you one
 recommendation as a visual report: charts, diagrams, action plan, risks and the vote. They work
 on AlphaCIS's business or any client's. For build asks like a marketing campaign, they also
 produce reviewed drafts of the campaign itself.
@@ -53,10 +53,10 @@ data never mixes with other clients'. The report is written to the client, with 
 
 For a build ask, the board doesn't stop at strategy. Following
 the marketing campaign playbook, it does three things:
-1. **Pins a number and a date**, then works the funnel backwards from the goal.
+1. **Pins a number and a date**, maps how the buyer decides, then works the funnel backwards from the goal.
 2. **Picks and scores channels**, then builds the budget and a 90-day calendar.
 3. **Writes the drafts:** email sequence, LinkedIn messages, call script, landing page copy, ad
-   variants and tracking plan. The CMO, the Customer Voice and the Independent Director review
+   variants and tracking plan. The CMO, the Buyer Psychologist, the Customer Voice and the Independent Director review
    every draft before you see it. Nothing is ever sent or posted for you.
 
 You get a published report link plus a five-line summary in chat. Each meeting's full record
@@ -76,6 +76,7 @@ You get a published report link plus a five-line summary in chat. Each meeting's
 | General Counsel & Risk | Contracts, compliance, risk register |
 | Chief People Officer | Hiring, workload, incentives |
 | Independent Director (always seated) | Devil's advocate, kill-switches, groupthink check |
+| Buyer Psychologist | Why buyers decide or stall: forces of change, buying group, biases, trust gap |
 | Voice of the Customer | Speaks as the target buyer; tests offers and messages |
 
 The Chair (Claude) seats 5 to 7 directors per problem. They work through these rounds:

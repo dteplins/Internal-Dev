@@ -41,7 +41,7 @@ never run silently. List them as a recommended next step, or ask first.
 | Asset | Skill |
 |---|---|
 | Campaign idea generation when the board is stuck | marketing-ideas |
-| Framing, offers, persuasion | marketing-psychology |
+| Framing, offers, persuasion (owned by the Buyer Psychologist) | marketing-psychology |
 | Landing and web page copy | copywriting |
 | Cold email sequences | cold-email |
 | Ad copy variants | ad-creative |

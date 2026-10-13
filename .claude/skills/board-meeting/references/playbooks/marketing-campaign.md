@@ -4,7 +4,7 @@ Use when the ask is to build, plan, fix or scale a campaign, lead generation pro
 outreach push, for AlphaCIS or for a client. The board doesn't stop at "here's the strategy". It
 agrees the approach, then produces the campaign: plan, calendar, budget, tracking and the assets.
 
-Seat: **CMO, CRO, CFO, Customer Voice, Independent**, plus COO (who runs it week to week) and
+Seat: **CMO, CRO, CFO, Buyer Psychologist, Customer Voice, Independent**, plus COO (who runs it week to week) and
 Counsel if the campaign touches regulated claims, cold email law (CAN-SPAM), calling (TCPA), health or finance.
 
 ## 1. Pin the goal (Chair, at intake)
@@ -21,11 +21,19 @@ Start from the goal and divide back through each stage's conversion rate:
 - The board must answer: **is the goal reachable with the team's capacity?** For AlphaCIS that
   includes Dima's 3 to 5 Architecture Sessions a week and Mark's call hours.
 
-## 3. Who exactly are we reaching (CMO + Customer Voice)
+## 3. Who exactly are we reaching, and how they decide (CMO + Buyer Psychologist + Customer Voice)
 - **Ideal customer:** industry, size, geography, job title of the buyer and the user.
 - **Trigger events** that make them ready now (hiring, new location, failed audit, vendor issue, season).
 - **Their words for the pain**, taken from reviews, Reddit, call notes and sales calls.
 - **Where they already pay attention.**
+- **Buyer psychology map (Psychologist):**
+  - **Forces of change:** push, pull, anxiety and habit.
+  - **Buying group:** who decides, and what each person fears.
+  - **Awareness stage:** how aware they are of the problem and of solutions.
+  - **Biases:** the top three to design around.
+  - **Trust gap:** what proof they need before the first step.
+
+  Every later step must answer this map.
 - Customer Voice reacts in character as this buyer: what would make them ignore it, what would
   make them reply.
 
@@ -57,7 +65,7 @@ Score each candidate channel 1 to 5 on these, and choose the top two or three:
 
 The Independent Director argues for cutting the weakest channel.
 
-## 6. Message and creative (CMO + Customer Voice)
+## 6. Message and creative (CMO + Buyer Psychologist + Customer Voice)
 - **Core message:** one sentence, in the buyer's words.
 - **Proof points:** three, real and sourced.
 - **Objections:** the top three, each with its answer.
@@ -102,7 +110,7 @@ Produce the assets the resolution calls for and save them in the meeting folder 
 | 90-day calendar | COO, as a table and a chart in the report |
 | Visuals (social graphics, banners) | Canva or Adobe Express, only if asked |
 
-Then hold a quick **asset review**. The CMO, Customer Voice and Independent Director read the assets
+Then hold a quick **asset review**. The CMO, Buyer Psychologist, Customer Voice and Independent Director read the assets
 against the resolution and the writing rules. Fix anything they flag before presenting.
 
 Never send, post, publish, schedule or upload anything. Every asset is a draft for the owner.

@@ -94,7 +94,8 @@ Essential Care is a Tier 1 AI-assisted help desk only. It has no SLA, no project
 ## Team
 | Person | Role | Notes |
 |---|---|---|
-| Dima | Managing Partner | Runs sales, architecture, every Architecture Session and client relationships |
+| Dima | Managing Partner, 50% owner | Runs sales, architecture, every Architecture Session and client relationships |
+| Allen | Partner, 50% owner | Mostly in charge of operations, plus some sales. Both partners must be able to live with any resolution |
 | Mark | Appointment setter, full time (30+ hrs/week) | Works from Dima's LinkedIn, email and phone; automation outreach not yet live as of Sept 2026 |
 | Joshua Evans | IT technician / engineer, contractor | Engaged Oct 2026 |
 | Jeff Davis | Messaging and strategy partner (Comnexiom) | Outside collaborator |
@@ -123,7 +124,7 @@ depends on them; these go stale.
 | Net income, year to date | $38,786.75 |
 
 Equity also shows partner accounts for **Allen** (-$59,967.06) and **Dmitriy Teplinskiy**
-(-$51,068.15). TODO: confirm who Allen is; the briefing doesn't mention a second partner.
+(-$51,068.15). Allen is Dima's 50/50 partner.
 
 **Sales by customer, Oct 1 2025 to Sep 30 2026:** $627,291.45 total across 61 customers.
 | Top customers | Sales |
@@ -189,8 +190,9 @@ Largest cost lines:
 | Continuing Education | $10,495.00 |
 
 Monthly income ranged from $38,570.74 (Oct 2025) to $73,717.83 (Jun 2026). December 2025 shows
-COGS of $117,151.23 and net income of -$105,160.04; the only loss month. TODO: confirm whether that
-was a one-off hardware pass-through or a booking error.
+COGS of $117,151.23 and net income of -$105,160.04; the only loss month. **Dima believes this is a
+booking error. Exclude December 2025 from trends, run rates and margin analysis until it is corrected**,
+and say in the report that it was excluded.
 
 Monthly net income: Oct $5,201 · Nov $21,935 · Dec -$105,160 · Jan $30,282 · Feb $25,222 ·
 Mar $4,761 · Apr $11,079 · May $2,180 · Jun $37,550 · Jul $13,669 · Aug $8,328 · Sep $30,253.

@@ -113,7 +113,8 @@ footer{margin-top:72px;padding-top:20px;border-top:1px solid var(--line);font-si
 
 <!-- 1. The answer first -->
 <header class="fade">
-  <div class="kicker">AlphaCIS Board of Directors · {{MEETING_DATE}}</div>
+  <img id="clientLogo" alt="" style="display:none;height:44px;width:auto;margin-bottom:14px">
+  <div class="kicker" id="kicker">AlphaCIS Board of Directors · {{MEETING_DATE}}</div>
   <h1>{{DECISION_AS_A_CLAIM}}</h1>
   <p class="lead">{{ONE_SENTENCE_WHY}}</p>
   <div class="badges" style="margin-top:18px">
@@ -146,6 +147,29 @@ footer{margin-top:72px;padding-top:20px;border-top:1px solid var(--line);font-si
     </div>
   </div>
   <details class="data"><summary>Show the data behind these charts</summary><div class="table-scroll" id="dataTable"></div></details>
+</section>
+
+<!-- 3b. Campaign (build asks from the marketing-campaign playbook; hidden when BOARD_DATA.campaign is null) -->
+<section id="campaign" style="display:none">
+  <div class="kicker">The campaign math</div>
+  <h2 id="campaignHeadline"></h2>
+  <p class="sub">Worked backwards from the goal. Rates marked (est.) are benchmarks until real data replaces them.</p>
+  <div class="grid g2">
+    <div class="chart-card">
+      <h3>Reverse funnel</h3>
+      <p class="cap">Volume needed each month at every stage to hit the goal.</p>
+      <div class="chart-wrap"><canvas id="funnelChart" role="img" aria-label="Monthly volume needed per funnel stage"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <h3>Budget by channel</h3>
+      <p class="cap">Monthly spend, including tools. Expected outcomes are in the scorecard below.</p>
+      <div class="chart-wrap"><canvas id="budgetChart" role="img" aria-label="Monthly spend by channel"></canvas></div>
+    </div>
+  </div>
+  <div class="card table-scroll" style="margin-top:14px">
+    <h3 style="margin-bottom:10px">Channel scorecard</h3>
+    <table id="channelTable"></table>
+  </div>
 </section>
 
 <!-- 4. How it works (diagram) -->
@@ -201,6 +225,14 @@ footer{margin-top:72px;padding-top:20px;border-top:1px solid var(--line);font-si
   <div class="callout" id="dissent" style="margin-top:14px;display:none"></div>
 </section>
 
+<!-- 7b. Deliverables (build asks; hidden when empty) -->
+<section id="deliverables" style="display:none">
+  <div class="kicker">Ready to use</div>
+  <h2>The drafts the board produced and reviewed</h2>
+  <p class="sub">Drafts only. Nothing has been sent, posted or scheduled.</p>
+  <div class="grid g2" id="deliverableList" style="margin-top:16px"></div>
+</section>
+
 <!-- 8. Gaps -->
 <section>
   <div class="kicker">What we assumed</div>
@@ -208,9 +240,9 @@ footer{margin-top:72px;padding-top:20px;border-top:1px solid var(--line);font-si
   <div class="card" style="margin-top:16px"><ul class="clean" id="gaps"></ul></div>
 </section>
 
-<footer>
+<footer id="footer">
   Prepared by the AlphaCIS AI board of directors for Dmitriy Teplinskiy. Figures marked (est.) are estimates;
-  sources and every director's full position are in <code>board/meetings/{{FOLDER}}/</code>.
+  sources and every director's full position are in <code>{{MEETING_FOLDER}}</code>.
   This is business guidance, not legal, tax or investment advice.
 </footer>
 </main>
@@ -218,6 +250,8 @@ footer{margin-top:72px;padding-top:20px;border-top:1px solid var(--line);font-si
 <script>
 /* ===== Replace everything in BOARD_DATA. Example values are illustrative only. ===== */
 const BOARD_DATA = {
+  // Client meetings: { name: "Master Window Systems", logo: "data:image/png;base64,..." or null }. AlphaCIS meetings: null.
+  client: null,
   votes: { approve: 4, conditions: 2, dissent: 0 },
   kpis: [
     { num: "$26k",  lbl: "<b>Investment</b> one-time" },
@@ -259,7 +293,27 @@ const BOARD_DATA = {
     "<b>{{DIRECTOR_A}} vs. {{DIRECTOR_B}}:</b> {{CRUX}}. Settled by {{HOW}}."
   ],
   dissent: null, // or { who: "COO", text: "...", condition: "..." }
-  gaps: [ "<b>{{MISSING_FACT}}:</b> assumed {{ASSUMPTION}}. Changes {{WHAT_IT_AFFECTS}}." ]
+  gaps: [ "<b>{{MISSING_FACT}}:</b> assumed {{ASSUMPTION}}. Changes {{WHAT_IT_AFFECTS}}." ],
+  // Build asks from the marketing-campaign playbook. Set to null for decide asks.
+  campaign: {
+    headline: "{{CAMPAIGN_HEADLINE_CLAIM}}",
+    funnel: [ // top of funnel first; rate = conversion from this stage to the next
+      { stage: "Prospects reached", volume: 1200, rate: "25% accept (est.)" },
+      { stage: "Conversations",     volume: 300,  rate: "12% to meeting (est.)" },
+      { stage: "Meetings booked",   volume: 36,   rate: "33% to proposal (est.)" },
+      { stage: "Proposals",         volume: 12,   rate: "33% close (est.)" },
+      { stage: "New clients",       volume: 4,    rate: "" }
+    ],
+    channels: [ // score 1 to 5 each; chosen = in the plan
+      { name: "LinkedIn outbound", reach: 5, cost: 4, speed: 4, effort: 3, fit: 5, spend: 300,  outcomes: "18 meetings (est.)", chosen: true },
+      { name: "Cold email",        reach: 4, cost: 5, speed: 4, effort: 4, fit: 3, spend: 150,  outcomes: "10 meetings (est.)", chosen: true },
+      { name: "Paid search",       reach: 3, cost: 2, speed: 5, effort: 3, fit: 3, spend: 1500, outcomes: "8 meetings (est.)",  chosen: false }
+    ]
+  },
+  // Build asks: each draft in assets/. Leave empty for decide asks.
+  deliverables: [
+    { name: "Cold email sequence", desc: "5 emails with subject lines, day 0 to day 14", path: "assets/cold-email-sequence.md" }
+  ]
 };
 
 /* ===== Rendering. No edits needed below this line. ===== */
@@ -341,7 +395,47 @@ function drawCharts(){
   $("dataTable").innerHTML = `<table><thead><tr><th>Month</th><th class="money">Cum. cost</th><th class="money">Cum. return</th><th class="money">Worst</th><th class="money">Base</th><th class="money">Best</th></tr></thead><tbody>${rows}</tbody></table>`;
 }
 
-function render(){ drawHeat(); drawMechanism(); drawCharts(); }
+function drawCampaign(){
+  const C = D.campaign; if (!C) return;
+  $("campaign").style.display = "block"; $("campaignHeadline").innerHTML = C.headline;
+  const grid = css("--grid"), blue = css("--primary"), cost = css("--chart-cost");
+  charts.push(new Chart($("funnelChart"), { type: "bar",
+    data: { labels: C.funnel.map(f => f.stage), datasets: [{ label: "Needed per month", data: C.funnel.map(f => f.volume), backgroundColor: blue, borderRadius: 4, barThickness: 22 }] },
+    options: { indexAxis: "y", responsive: true, maintainAspectRatio: false, layout: { padding: { right: 48 } },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `${c.raw.toLocaleString()} per month${C.funnel[c.dataIndex].rate ? " · " + C.funnel[c.dataIndex].rate : ""}` } } },
+      scales: { x: { type: "logarithmic", grid: { color: grid }, title: { display: true, text: "Per month (log scale)" },
+             ticks: { maxRotation: 0, callback: v => [1, 10, 100, 1000, 10000, 100000].includes(v) ? v.toLocaleString() : "" } },
+             y: { grid: { display: false } } } },
+    plugins: [{ id: "endLabels", afterDatasetsDraw(chart) {
+      const { ctx } = chart, meta = chart.getDatasetMeta(0);
+      ctx.save(); ctx.fillStyle = css("--text-2"); ctx.font = "600 12.5px Calibri, Carlito, Segoe UI, sans-serif"; ctx.textBaseline = "middle";
+      meta.data.forEach((bar, i) => ctx.fillText(C.funnel[i].volume.toLocaleString(), bar.x + 6, bar.y));
+      ctx.restore(); } }] }));
+  charts.push(new Chart($("budgetChart"), { type: "bar",
+    data: { labels: C.channels.map(c => c.name), datasets: [{ label: "Monthly spend", data: C.channels.map(c => c.spend),
+      backgroundColor: C.channels.map(c => c.chosen ? blue : cost), borderRadius: 4, barThickness: 28 }] },
+    options: { responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `$${c.raw.toLocaleString()} a month${C.channels[c.dataIndex].chosen ? "" : " (not chosen)"}` } } },
+      scales: { x: { grid: { display: false } }, y: { grid: { color: grid }, ticks: { callback: v => "$" + v.toLocaleString() } } } } }));
+  const total = c => c.reach + c.cost + c.speed + c.effort + c.fit;
+  $("channelTable").innerHTML = `<thead><tr><th>Channel</th><th>Reach</th><th>Cost</th><th>Speed</th><th>Effort</th><th>Fit</th><th>Total /25</th><th class="money">Spend / mo</th><th>Expected</th><th>Plan</th></tr></thead><tbody>` +
+    C.channels.map(c => `<tr><td><b>${c.name}</b></td><td>${c.reach}</td><td>${c.cost}</td><td>${c.speed}</td><td>${c.effort}</td><td>${c.fit}</td><td><b>${total(c)}</b></td><td class="money">$${c.spend.toLocaleString()}</td><td>${c.outcomes}</td><td><span class="vote ${c.chosen ? "approve" : "dissent"}">${c.chosen ? "In" : "Cut"}</span></td></tr>`).join("") + `</tbody>`;
+}
+
+function drawFrame(){
+  if (D.client) {
+    $("kicker").textContent = `Prepared for ${D.client.name} · {{MEETING_DATE}}`;
+    if (D.client.logo) { const l = $("clientLogo"); l.src = D.client.logo; l.alt = D.client.name; l.style.display = "block"; }
+    $("footer").innerHTML = `Prepared by AlphaCIS for ${D.client.name}. Figures marked (est.) are estimates. This is business guidance, not legal, tax or investment advice.`;
+  }
+  if (D.deliverables && D.deliverables.length) {
+    $("deliverables").style.display = "block";
+    $("deliverableList").innerHTML = D.deliverables.map(d => `<div class="card accent"><h3>${d.name}</h3><p>${d.desc}</p><p style="font-size:13px;margin-top:6px"><code>${d.path}</code></p></div>`).join("");
+  }
+}
+
+function render(){ drawHeat(); drawMechanism(); drawCharts(); drawCampaign(); }
+drawFrame();
 let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(drawMechanism, 150); });
 render();
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
